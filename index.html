@@ -857,14 +857,14 @@
     // 1) Create Supabase client
     const SUPABASE_URL     = 'https://ixeqixkfvkfeywrwqmxv.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4ZXFpeGtmdmtmZXl3cndxbXh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4NjkxMzksImV4cCI6MjA2NzQ0NTEzOX0.1Fm_t7LqNCtGKfE9N-LyODdhSJJWCE5xQjPvY_c8t2M';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // 2) Load from Supabase & render
     async function loadFromSupabase() {
-      const { data: clientsData, error: clientsError } = await supabase
-        .from('clients')
-        .select('*')
-        .order('name', { ascending: true });
+    const { data: clientsData, error: clientsError } = await supabaseClient
+      .from('clients')
+      .select('*')
+      .order('name', { ascending: true });
       if (clientsError) {
         console.error('Error loading clients:', clientsError);
         return;
@@ -901,22 +901,25 @@
 
     // 4) Setup realtime subscriptions
     function setupRealtime() {
-      supabase
-        .from('clients')
-        .on('INSERT', loadFromSupabase)
-        .on('UPDATE', loadFromSupabase)
-        .on('DELETE', loadFromSupabase)
-        .subscribe();
+  supabaseClient
+    .from('clients')
+    .on('INSERT',   () => loadFromSupabase())
+    .on('UPDATE',   () => loadFromSupabase())
+    .on('DELETE',   () => loadFromSupabase())
+    .subscribe();
 
-      supabase
-        .from('tasks')
-        .on('INSERT', loadFromSupabase)
-        .on('UPDATE', loadFromSupabase)
-        .on('DELETE', loadFromSupabase)
-        .subscribe();
-    }
+  supabaseClient
+    .from('tasks')
+    .on('INSERT',   () => loadFromSupabase())
+    .on('UPDATE',   () => loadFromSupabase())
+    .on('DELETE',   () => loadFromSupabase())
+    .subscribe();
+}
 
-    document.addEventListener('DOMContentLoaded', initializeApp);
+    document.addEventListener('DOMContentLoaded', () => {
+    initializeApp(/* which now uses supabaseClient */);
+  });
+</script>
 
     // ---------- All your existing JS functions below (unchanged) ----------
     let clients = [], tasks = [], filteredClients = [], lostClients = [], deletedClients = [];
