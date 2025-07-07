@@ -901,20 +901,19 @@
 
     // 4) Setup realtime subscriptions
     function setupRealtime() {
-  supabaseClient
-    .from('clients')
-    .on('INSERT',   () => loadFromSupabase())
-    .on('UPDATE',   () => loadFromSupabase())
-    .on('DELETE',   () => loadFromSupabase())
-    .subscribe();
+    supabaseClient
+      .from('clients')
+      .on('INSERT',   () => loadFromSupabase())
+      /* … */
+      .subscribe();
 
-  supabaseClient
-    .from('tasks')
-    .on('INSERT',   () => loadFromSupabase())
-    .on('UPDATE',   () => loadFromSupabase())
-    .on('DELETE',   () => loadFromSupabase())
-    .subscribe();
-}
+      supabase
+        .from('tasks')
+        .on('INSERT', loadFromSupabase)
+        .on('UPDATE', loadFromSupabase)
+        .on('DELETE', loadFromSupabase)
+        .subscribe();
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
     initializeApp(/* which now uses supabaseClient */);
@@ -931,9 +930,9 @@
     const typeIcon = t => ({consulting:'C',advertising:'A',development:'D',design:'De'})[t] || 'C';
 
     function generateClientLink(id){
-      const base = `${window.location.origin}${window.location.pathname}`;
+      const base = ${window.location.origin}${window.location.pathname};
       const token = btoa(id + '_' + Date.now()).replace(/[^a-zA-Z0-9]/g, '').substring(0,16);
-      return `${base}?client=${token}&id=${id}`;
+      return ${base}?client=${token}&id=${id};
     }
 
     function renderClients(){
@@ -948,7 +947,7 @@
         tr.className = 'client-row';
         tr.draggable = true;
         tr.dataset.clientId = c.id;
-        tr.innerHTML = `
+        tr.innerHTML = 
           <td>${typeIcon(c.type)}</td>
           <td><span onclick="openClientModal(${c.id})"
                      style="cursor:pointer;color:#3b49df;font-weight:bold;text-decoration:underline;">
@@ -975,7 +974,7 @@
             <small>${c.progress}%</small>
           </td>
           <td>${needs?'🚩':'✅'}</td>
-        `;
+        ;
         tr.addEventListener('dragstart', handleDragStart);
         tr.addEventListener('dragend',   handleDragEnd);
         tb.appendChild(tr);
@@ -995,15 +994,15 @@
         d.className = 'lost-client-card';
         d.draggable = true;
         d.dataset.clientId = c.id;
-        d.innerHTML = `
+        d.innerHTML = 
           <h4>${c.name}</h4>
           <p>${c.email}</p>
           <p><strong>Lost:</strong> ${fmtCur(c.monthlyRevenue)}</p>
           <p><small>Lost ${days} days ago</small></p>
-          ${days>30?`<p style="color:orange;font-size:.8em;">
+          ${days>30?<p style="color:orange;font-size:.8em;">
                          ⚠️ Archives in ${35-days} days
-                       </p>`:''}
-        `;
+                       </p>:''}
+        ;
         d.addEventListener('dragstart', handleDragStart);
         d.addEventListener('dragend',   handleDragEnd);
         lc.appendChild(d);
@@ -1020,12 +1019,12 @@
       deletedClients.forEach(c=>{
         const d = document.createElement('div');
         d.className = 'deleted-client-card';
-        d.innerHTML = `
+        d.innerHTML = 
           <h4>${c.name}</h4>
           <p>${c.email}</p>
           <p><strong>Revenue:</strong> ${fmtCur(c.monthlyRevenue)}</p>
           <p><small>Deleted on ${fmtDate(c.deletedDate)}</small></p>
-        `;
+        ;
         dc.appendChild(d);
       });
     }
@@ -1097,7 +1096,7 @@
       const url  = URL.createObjectURL(blob);
       const a    = document.createElement('a');
       a.href = url;
-      a.download = `crm_report_${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = crm_report_${new Date().toISOString().split('T')[0]}.csv;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -1112,11 +1111,11 @@
         clients.forEach(c=>{
           const div = document.createElement('div');
           div.style.marginBottom = '15px';
-          div.innerHTML = `
+          div.innerHTML = 
             <strong>${c.name}:</strong>
             <input class="client-link-input" value="${c.clientLink}" readonly/>
             <button class="copy-link-btn" onclick="copyToClipboard('${c.clientLink}')">Copy Link</button>
-          `;
+          ;
           cont.appendChild(div);
         });
       }
@@ -1149,7 +1148,7 @@
 
     function showMessage(msg,type){
       const n = document.createElement('div');
-      n.className = `${type}-message`;
+      n.className = ${type}-message;
       n.textContent = msg;
       n.style.position = 'fixed';
       n.style.top = '20px';
@@ -1214,7 +1213,7 @@
         delete c.lostDate;
         clients.push(c);
         applyFilters();
-        showMessage(`Restored as ${newStatus}`,'success');
+        showMessage(Restored as ${newStatus},'success');
       }
     }
 
@@ -1252,21 +1251,21 @@
         t.priority = newP;
         t.updatedAt = new Date().toISOString();
         renderTasks();
-        showMessage(`Moved to ${newP}`,'success');
+        showMessage(Moved to ${newP},'success');
       }
     }
     function createTaskCard(t){
       const d = document.createElement('div');
-      d.className = `task-card ${t.priority}`;
+      d.className = task-card ${t.priority};
       d.draggable = true;
       d.dataset.taskId = t.id;
-      d.innerHTML = `
+      d.innerHTML = 
         <div class="task-title">${t.title}</div>
         <div class="task-assignee">${t.assignee}</div>
         <div class="task-meta">
           <div class="task-date">${formatTaskDate(t.created)}</div>
         </div>
-      `;
+      ;
       d.addEventListener('dragstart', handleTaskDragStart);
       d.addEventListener('dragend',   handleTaskDragEnd);
       return d;
@@ -1292,7 +1291,7 @@
       const diff= Math.floor((now - d)/(1000*60*60*24));
       if (diff===0) return 'Today';
       if (diff===1) return 'Yesterday';
-      if (diff<7)  return `${diff} days ago`;
+      if (diff<7)  return ${diff} days ago;
       return d.toLocaleDateString();
     }
 
@@ -1437,7 +1436,7 @@
       restoringClient = null;
     }
     function selectStatus(s){
-      document.querySelector(`input[value="${s}"]`).checked = true;
+      document.querySelector(input[value="${s}"]).checked = true;
       document.querySelectorAll('.status-option').forEach(o=>o.classList.remove('selected'));
       event.currentTarget.classList.add('selected');
     }
