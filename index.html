@@ -1675,19 +1675,19 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
   const formData = new FormData(e.target);
   
   const newClient = {
-    type: formData.get('client_type'),
-    name: formData.get('name'),
-    email: formData.get('email'),
-    phone: formData.get('phone'),
-    billing_address: formData.get('billing_address'),
-    start_date: formData.get('start_date'),
-    monthly_revenue: parseFloat(formData.get('monthly_revenue')),
-    monthly_ad_spend: parseFloat(formData.get('monthly_ad_spend')),
-    status: formData.get('status'),
-    last_contact: formData.get('last_contact'),
-    progress: 0,
-    follow_up: false,
-    deleted: false
+    type:           formData.get('client_type'),
+    name:           formData.get('name'),
+    email:          formData.get('email'),
+    phone:          formData.get('phone'),
+    billing_address:formData.get('billing_address'),
+    start_date:     formData.get('start_date'),
+    monthly_revenue:parseFloat(formData.get('monthly_revenue')),
+    monthly_ad_spend:parseFloat(formData.get('monthly_ad_spend')),
+    status:         formData.get('status'),
+    last_contact:   formData.get('last_contact'),
+    progress:       0,
+    follow_up:      false,
+    deleted:        false
   };
 
   try {
@@ -1696,38 +1696,35 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
         .from('Clients')
         .insert([newClient])
         .select();
-      
       if (error) throw error;
       
       if (data && data[0]) {
-        // Update local state/UI
-        newClient.id = data[0].id;
-        newClient.clientLink = generateClientLink(data[0].id);
-        newClient.ad_spend = newClient.monthly_ad_spend;
+        // — update UI
+        newClient.id        = data[0].id;
+        newClient.clientLink= generateClientLink(data[0].id);
+        newClient.ad_spend  = newClient.monthly_ad_spend;
         clients.push(newClient);
         applyFilters();
         showMessage('✅ Client added successfully!', 'success');
         closeModal();
 
-        // 🔔 Notify Zapier
-        fetch('https://hooks.zapier.com/hooks/catch/21853196/2n5jrmp/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data[0])
-        })
-        .then(res => {
-          if (!res.ok) throw new Error(`Zapier responded ${res.status}`);
-          console.log('Zapier hook fired successfully');
-        })
-        .catch(err => {
-          console.error('Error firing Zapier hook:', err);
-        });
+        // — fire Zapier webhook (no-cors)
+        try {
+          fetch('https://hooks.zapier.com/hooks/catch/21853196/2n5jrmp/', {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(data[0])
+          });
+          console.log('Zapier hook POST sent (no-cors mode)');
+        } catch(zapErr) {
+          console.warn('Zapier hook error (ignored):', zapErr);
+        }
       }
     } else {
-      // Fallback for local storage
-      newClient.id = Date.now();
-      newClient.clientLink = generateClientLink(newClient.id);
-      newClient.ad_spend = newClient.monthly_ad_spend;
+      // local fallback…
+      newClient.id        = Date.now();
+      newClient.clientLink= generateClientLink(newClient.id);
+      newClient.ad_spend  = newClient.monthly_ad_spend;
       clients.push(newClient);
       applyFilters();
       showMessage('✅ Client added successfully!', 'success');
