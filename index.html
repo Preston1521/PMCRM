@@ -366,6 +366,72 @@
 </head>
 <body>
   <!-- PM Dashboard -->
+  <!-- Step 2a: include the Supabase client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+  // Step 2b: initialize Supabase
+  const SUPABASE_URL     = 'https://ixeqixkfvkfeywrwqmxv.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4ZXFpeGtmdmtmZXl3cndxbXh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4NjkxMzksImV4cCI6MjA2NzQ0NTEzOX0.1Fm_t7LqNCtGKfE9N-LyODdhSJJWCE5xQjPvY_c8t2M';
+  const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  // Step 1: fetch live data from Supabase
+  async function loadFromSupabase() {
+    // fetch clients
+    let { data: clientsData, error: clientsError } = await supabaseClient
+      .from('clients')
+      .select('*')
+      .order('name', { ascending: true });
+    if (clientsError) {
+      console.error('Error loading clients:', clientsError);
+      return;
+    }
+    clients = clientsData;
+
+    // fetch tasks
+    let { data: tasksData, error: tasksError } = await supabaseClient
+      .from('tasks')
+      .select('*')
+      .order('created', { ascending: false });
+    if (tasksError) {
+      console.error('Error loading tasks:', tasksError);
+      return;
+    }
+    tasks = tasksData;
+
+    // render everything
+    filteredClients = [...clients];
+    renderClients();
+    renderTasks();
+    updateMetrics();
+  }
+
+  // Replace your old initialize call
+  async function initializeApp() {
+    await loadFromSupabase();
+    setupEventListeners();
+    setupDropZones();
+    setupTaskDropZones();
+  }
+// ======== Realtime Subscriptions ========
+    function setupRealtime() {
+      supabase
+        .from('clients')
+        .on('INSERT', () => loadFromSupabase())
+        .on('UPDATE', () => loadFromSupabase())
+        .on('DELETE', () => loadFromSupabase())
+        .subscribe();
+      supabase
+        .from('tasks')
+        .on('INSERT', () => loadFromSupabase())
+        .on('UPDATE', () => loadFromSupabase())
+        .on('DELETE', () => loadFromSupabase())
+        .subscribe();
+    }
+  document.addEventListener('DOMContentLoaded', initializeApp);
+</script>
   <div id="mainDashboard" class="container drop-zone">
     <div class="header">
       <h1>PM Dashboard</h1>
@@ -979,49 +1045,80 @@
     }
 
     // ========= Task Form =========
-    function handleTaskSubmission(e){
-      e.preventDefault();
-      const fd=new FormData(e.target), msgs=document.getElementById('taskFormMessages');
-      try{
-        const nt={ id:Date.now(), title:fd.get('title'), description:fd.get('description')||'', assignee:fd.get('assignee'), priority:fd.get('priority'), created:new Date().toISOString() };
-        if(!nt.title||!nt.assignee||!nt.priority) throw new Error('Fill all required');
-        tasks.push(nt);
-        renderTasks(); closeTaskModal(); showMessage('Task created','success');
-      }catch(err){
-        msgs.innerHTML=`<div class="error-message">❌ ${err.message}</div>`;
-      }
-    }
-    function selectPriority(p){
-      document.querySelectorAll('.priority-option').forEach(o=>o.classList.remove('selected'));
-      document.querySelector(`.priority-option.${p}`).classList.add('selected');
-      document.getElementById('taskPriority').value=p;
-    }
+    async function handleTaskSubmission(e) {
+  e.preventDefault();
+  const msgs = document.getElementById('taskFormMessages');
+  const fd   = new FormData(e.target);
 
+  // build the new task object
+  const newTask = {
+    title:       fd.get('title'),
+    description: fd.get('description') || '',
+    assignee:    fd.get('assignee'),
+    priority:    fd.get('priority'),
+    created:     new Date().toISOString()
+  };
+
+  if (!newTask.title || !newTask.assignee || !newTask.priority) {
+    throw new Error('Please fill in all required fields');
+  }
+
+  // insert into Supabase
+  const { data, error } = await supabase
+    .from('tasks')
+    .insert([ newTask ]);
+
+  if (error) {
+    console.error('Error inserting task:', error);
+    showMessage('❌ Failed to create task','error');
+  } else {
+    showMessage('✅ Task created!','success');
+    closeTaskModal();
+    // re-fetch & re-render everything
+    await loadFromSupabase();
+  }
+}
+// make sure your form is still wired up to this function:
+document.getElementById('taskForm')
+  .removeEventListener('submit', handleTaskSubmission);
+document.getElementById('taskForm')
+  .addEventListener('submit', handleTaskSubmission);
     // ========= Client Form =========
-    function setupEventListeners(){
-      document.getElementById('clientForm').addEventListener('submit',e=>{
-        e.preventDefault();
-        const fd=new FormData(e.target);
-        const nc={
-          id:Date.now(),
-          type:fd.get('client_type'),
-          name:fd.get('name'),
-          email:fd.get('email'),
-          phone:fd.get('phone'),
-          billingAddress:fd.get('billing_address'),
-          startDate:fd.get('start_date'),
-          monthlyRevenue:parseFloat(fd.get('monthly_revenue')),
-          adSpend:parseFloat(fd.get('monthly_ad_spend')),
-          status:fd.get('status'),
-          lastContact:fd.get('last_contact'),
-          progress:Math.floor(Math.random()*100),
-          followUp:false,
-          clientLink:''
-        };
-        nc.clientLink=generateClientLink(nc.id);
-        clients.push(nc);
-        applyFilters(); closeModal(); showMessage('Client added','success');
-      });
+    function setupEventListeners() {
+  // === Client Form ===
+  document.getElementById('clientForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const newClient = {
+      type:            fd.get('client_type'),
+      name:            fd.get('name'),
+      email:           fd.get('email'),
+      phone:           fd.get('phone'),
+      billing_address: fd.get('billing_address'),
+      start_date:      fd.get('start_date'),
+      monthly_revenue: parseFloat(fd.get('monthly_revenue')),
+      ad_spend:        parseFloat(fd.get('monthly_ad_spend')),
+      status:          fd.get('status'),
+      last_contact:    fd.get('last_contact'),
+    };
+    
+    const { data, error } = await supabase
+      .from('clients')
+      .insert([ newClient ]);
+
+    if (error) {
+      console.error('Error inserting client:', error);
+      showMessage('❌ Failed to add client','error');
+    } else {
+      showMessage('✅ Client added!','success');
+      closeModal();
+      // re-fetch & re-render from Supabase
+      await loadFromSupabase();
+    }
+  });
+
+  // your existing taskForm & keydown listeners…
+}
       document.getElementById('taskForm').addEventListener('submit',handleTaskSubmission);
       document.addEventListener('keydown',e=>{
         if(e.key==='Escape'){
