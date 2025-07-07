@@ -77,7 +77,7 @@
     .export-btn { background: linear-gradient(135deg,#27ae60,#2ecc71); }
     .generate-link-btn { background: linear-gradient(135deg,#e74c3c,#c0392b); }
 
-    /* To-Do List */
+    /* To-Do List Styles */
     .todo-section {
       background: rgba(255,255,255,0.9);
       backdrop-filter: blur(10px);
@@ -114,9 +114,18 @@
       border-radius: 8px;
       text-align: center;
     }
-    .todo-header.urgent { background: linear-gradient(135deg,#ff6b6b,#ee5a52); color:#fff; }
-    .todo-header.moderate { background: linear-gradient(135deg,#feca57,#ff9ff3); color:#fff; }
-    .todo-header.done { background: linear-gradient(135deg,#48dbfb,#0abde3); color:#fff; }
+    .todo-header.urgent {
+      background: linear-gradient(135deg,#ff6b6b,#ee5a52);
+      color: white;
+    }
+    .todo-header.moderate {
+      background: linear-gradient(135deg,#feca57,#ff9ff3);
+      color: white;
+    }
+    .todo-header.done {
+      background: linear-gradient(135deg,#48dbfb,#0abde3);
+      color: white;
+    }
     .task-card {
       background: rgba(255,255,255,0.95);
       border-radius: 10px;
@@ -127,127 +136,227 @@
       border-left: 4px solid transparent;
       margin-bottom: 10px;
     }
-    .task-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    .task-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
     .task-card.urgent { border-left-color: #ff6b6b; }
     .task-card.moderate { border-left-color: #feca57; }
     .task-card.done { border-left-color: #48dbfb; opacity: 0.8; }
     .task-card.dragging { opacity: 0.6; transform: rotate(3deg) scale(1.02); }
-    .task-title { font-weight:600; font-size:1rem; color:#333; margin-bottom:8px; }
+    .task-title { font-weight: 600; font-size: 1rem; color: #333; margin-bottom: 8px; }
     .task-assignee {
-      display:inline-block;
-      background:linear-gradient(135deg,#667eea,#764ba2);
-      color:#fff;
-      padding:4px 12px;
-      border-radius:15px;
-      font-size:.8rem;
-      font-weight:500;
-      margin-bottom:8px;
+      display: inline-block;
+      background: linear-gradient(135deg,#667eea,#764ba2);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 8px;
     }
-    .task-meta { display:flex; justify-content:space-between; align-items:center; font-size:.8rem; color:#666; margin-top:10px; }
+    .task-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 10px;
+    }
 
-    /* Filters */
+    /* Filters Section */
     .filters-section {
       background: rgba(248,249,250,0.8);
       backdrop-filter: blur(10px);
-      padding:20px;
-      border-radius:12px;
-      margin-bottom:20px;
-      display:flex;
-      gap:15px;
-      flex-wrap:wrap;
-      align-items:center;
-      border:1px solid rgba(255,255,255,0.2);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.2);
     }
-    .filter-group { display:flex; flex-direction:column; gap:5px; }
-    .filter-group label { font-size:.9rem; font-weight:600; color:#555; }
-    .filter-group input, .filter-group select {
-      padding:8px 12px;
-      border:2px solid #dee2e6;
-      border-radius:8px;
-      font-size:.9rem;
-      background:rgba(255,255,255,0.9);
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
     }
-    .filter-group input:focus, .filter-group select:focus { outline:none; border-color:#667eea; }
+    .filter-group label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #555;
+    }
+    .filter-group input,
+    .filter-group select {
+      padding: 8px 12px;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.9);
+    }
+    .filter-group input:focus,
+    .filter-group select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
 
     /* Clients Table */
     .clients-table {
-      width:100%;
-      border-collapse:collapse;
-      margin-bottom:30px;
-      background:rgba(255,255,255,0.9);
-      backdrop-filter:blur(10px);
-      border-radius:8px;
-      overflow:hidden;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .clients-table th, .clients-table td {
-      padding:12px 16px;
-      font-size:.95rem;
-      color:#111;
+    .clients-table th,
+    .clients-table td {
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      color: #111;
     }
-    .clients-table th { background:#2c3e50; color:#fff; font-weight:600; }
-    .client-row { cursor:move; transition:all .3s ease; background:rgba(255,255,255,0.7); }
-    .client-row:hover { background:rgba(240,244,250,0.9); transform:translateX(4px); box-shadow:0 4px 15px rgba(0,0,0,0.1); }
-    .client-row.dragging { opacity:0.6; transform:rotate(3deg) scale(1.02); }
+    .clients-table th {
+      background: #2c3e50;
+      color: #fff;
+      font-weight: 600;
+    }
+    .client-row {
+      cursor: move;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.7);
+    }
+    .client-row:hover {
+      background: rgba(240,244,250,0.9);
+      transform: translateX(4px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .client-row.dragging {
+      opacity: 0.6;
+      transform: rotate(3deg) scale(1.02);
+    }
 
     /* Badges */
-    .status-badge { display:inline-block; padding:6px 12px; border-radius:20px; font-size:.8rem; font-weight:600; }
-    .status-active { background:#d4edda; color:#155724; }
-    .status-at-risk { background:#fff3cd; color:#856404; }
-    .status-new { background:#cce5ff; color:#004085; }
-    .status-lost { background:#f8d7da; color:#721c24; }
-    .roi-badge { display:inline-block; padding:4px 8px; border-radius:12px; font-size:.75rem; font-weight:600; margin-left:5px; }
-    .roi-positive { background:#d4edda; color:#155724; }
-    .roi-negative { background:#f8d7da; color:#721c24; }
-    .roi-neutral { background:#e2e3e5; color:#495057; }
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .status-active { background: #d4edda; color: #155724; }
+    .status-at-risk { background: #fff3cd; color: #856404; }
+    .status-new { background: #cce5ff; color: #004085; }
+    .status-lost { background: #f8d7da; color: #721c24; }
+    .roi-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+    .roi-positive { background: #d4edda; color: #155724; }
+    .roi-negative { background: #f8d7da; color: #721c24; }
+    .roi-neutral { background: #e2e3e5; color: #495057; }
 
     /* Progress bar */
-    .progress-bar { width:100%; height:8px; background:#eceff1; border-radius:4px; overflow:hidden; margin-top:4px; }
-    .progress-fill { height:100%; background:linear-gradient(90deg,#667eea,#764ba2); }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #eceff1;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg,#667eea,#764ba2);
+    }
 
-    /* Lost & Deleted */
-    .lost-section, .deleted-section {
-      padding:30px;
-      border:2px dashed #ccc;
-      border-radius:12px;
-      background:rgba(250,250,250,0.8);
-      backdrop-filter:blur(10px);
-      text-align:center;
-      transition:all .3s ease;
-      min-height:150px;
-      margin-bottom:20px;
+    /* Lost & Deleted Sections */
+    .lost-section,
+    .deleted-section {
+      padding: 30px;
+      border: 2px dashed #ccc;
+      border-radius: 12px;
+      background: rgba(250,250,250,0.8);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      transition: all 0.3s ease;
+      min-height: 150px;
+      margin-bottom: 20px;
     }
-    .lost-section.drag-over { background:rgba(255,236,236,0.9); border-color:#f44336; transform:scale(1.02); box-shadow:0 8px 25px rgba(244,67,54,0.3); }
-    .lost-section h3, .deleted-section h3 { font-size:1.5rem; margin-bottom:12px; }
-    .lost-client-card, .deleted-client-card {
-      background:rgba(255,255,255,0.9);
-      padding:16px;
-      border-radius:8px;
-      cursor:move;
-      transition:all .3s ease;
-      text-align:left;
-      box-shadow:0 2px 10px rgba(0,0,0,0.1);
-      margin-bottom:10px;
+    .lost-section.drag-over {
+      background: rgba(255,236,236,0.9);
+      border-color: #f44336;
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(244,67,54,0.3);
     }
-    .lost-client-card { border-left:4px solid #f44336; }
-    .lost-client-card.dragging { opacity:0.6; transform:rotate(-3deg) scale(1.02); }
-    .deleted-client-card { background:rgba(200,200,200,0.5); border-left:4px solid #999; opacity:0.7; }
-    .lost-clients, .deleted-clients { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
+    .lost-client-card,
+    .deleted-client-card {
+      background: rgba(255,255,255,0.9);
+      padding: 16px;
+      border-radius: 8px;
+      cursor: move;
+      transition: all 0.3s ease;
+      text-align: left;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }
+    .lost-client-card { border-left: 4px solid #f44336; }
+    .lost-client-card.dragging {
+      opacity: 0.6;
+      transform: rotate(-3deg) scale(1.02);
+    }
+    .deleted-client-card {
+      background: rgba(200,200,200,0.5);
+      border-left: 4px solid #999;
+      opacity: 0.7;
+    }
+    .lost-clients,
+    .deleted-clients {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 16px;
+    }
 
     /* Client Link Section */
     .client-link-section {
-      background:linear-gradient(135deg,rgba(255,154,86,0.9),rgba(255,173,86,0.9));
-      backdrop-filter:blur(10px);
-      padding:20px;
-      border-radius:12px;
-      margin-bottom:20px;
-      color:#fff;
-      text-align:center;
-      border:1px solid rgba(255,255,255,0.2);
+      background: linear-gradient(135deg,rgba(255,154,86,0.9),rgba(255,173,86,0.9));
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      color: #fff;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.2);
     }
-    .client-link-input { background:rgba(255,255,255,0.9); border:none; padding:10px; border-radius:8px; width:70%; margin:10px; font-size:.9rem; color:#333; }
-    .copy-link-btn { background:rgba(255,255,255,0.2); color:#fff; border:1px solid rgba(255,255,255,0.3); padding:8px 16px; border-radius:20px; cursor:pointer; transition:all .3s ease; }
-    .copy-link-btn:hover { background:rgba(255,255,255,0.3); transform:translateY(-2px); }
+    .client-link-input {
+      background: rgba(255,255,255,0.9);
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      width: 70%;
+      margin: 10px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .copy-link-btn {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .copy-link-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
 
     /* Modals */
     .modal {
@@ -279,29 +388,40 @@
       align-items: center;
       margin-bottom: 20px;
     }
-    .modal-header h3 { font-size:1.5rem; color:#333; margin:0; }
+    .modal-header h3 { font-size: 1.5rem; color: #333; margin: 0; }
     .close {
       cursor: pointer;
-      font-size:1.8rem;
-      color:#666;
-      transition: color .3s ease;
+      font-size: 1.8rem;
+      color: #666;
+      transition: color 0.3s ease;
     }
-    .close:hover { color:#000; transform:scale(1.1); }
+    .close:hover { color: #000; transform: scale(1.1); }
 
-    /* Form */
-    .form-group { margin-bottom:20px; }
-    .form-group label { display:block; margin-bottom:8px; font-weight:600; color:#333; }
-    .form-group input, .form-group select, .form-group textarea {
-      width:100%;
-      padding:12px;
-      border:2px solid #e1e5e9;
-      border-radius:8px;
-      font-size:1rem;
-      transition:all .3s ease;
-      background:rgba(255,255,255,0.9);
+    /* Forms */
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
     }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      outline:none; border-color:#667eea; box-shadow:0 0 0 3px rgba(102,126,234,0.1);
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.9);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
     }
     .submit-btn {
       background: linear-gradient(135deg,#667eea,#764ba2);
@@ -313,122 +433,116 @@
       font-weight: 600;
       width: 100%;
       cursor: pointer;
-      transition: all .3s ease;
+      transition: all 0.3s ease;
     }
-    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102,126,234,0.3); }
-
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
     .form-group.full-width { grid-column: 1 / -1; }
-    .priority-selector { display: grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:10px; }
+    .priority-selector {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
     .priority-option {
-      padding:12px; border:2px solid #e1e5e9; border-radius:8px; text-align:center; cursor:pointer; transition:all .3s ease; font-weight:600;
+      padding: 12px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
     }
-    .priority-option.urgent { border-color:#ff6b6b; background:rgba(255,107,107,0.1); }
-    .priority-option.moderate { border-color:#feca57; background:rgba(254,202,87,0.1); }
-    .priority-option.selected { transform:scale(1.05); box-shadow:0 4px 15px rgba(0,0,0,0.2); }
+    .priority-option.urgent {
+      border-color: #ff6b6b;
+      background: rgba(255,107,107,0.1);
+    }
+    .priority-option.moderate {
+      border-color: #feca57;
+      background: rgba(254,202,87,0.1);
+    }
+    .priority-option.selected {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
 
-    /* Status modal */
-    .status-modal { padding:25px; border-radius:15px; }
-    .status-selection { display:grid; gap:15px; margin:20px 0; }
+    .status-modal { padding: 25px; border-radius: 15px; }
+    .status-selection { display: grid; gap: 15px; margin: 20px 0; }
     .status-option {
-      display:flex; align-items:center; padding:12px; border:2px solid #e1e5e9; border-radius:8px; cursor:pointer; transition:all .3s ease;
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    .status-option:hover { border-color:#667eea; background:rgba(102,126,234,0.05); }
-    .status-option input { margin-right:12px; }
-    .status-indicator { width:12px; height:12px; border-radius:50%; margin-right:8px; }
-    .status-indicator.active { background:#28a745; }
-    .status-indicator['at-risk'] { background:#ffc107; }
-    .status-indicator.new { background:#007bff; }
+    .status-option:hover {
+      border-color: #667eea;
+      background: rgba(102,126,234,0.05);
+    }
+    .status-option input { margin-right: 12px; }
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+      display: inline-block;
+    }
+    .status-indicator.active { background: #28a745; }
+    .status-indicator['at-risk'] { background: #ffc107; }
+    .status-indicator.new { background: #007bff; }
 
-    .success-message, .error-message {
-      padding:15px; border-radius:8px; margin:15px 0; font-weight:600; text-align:center;
+    .success-message,
+    .error-message {
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-weight: 600;
+      text-align: center;
     }
-    .success-message { background:rgba(212,237,218,0.9); color:#155724; border:1px solid rgba(21,87,36,0.2); }
-    .error-message { background:rgba(248,215,218,0.9); color:#721c24; border:1px solid rgba(114,28,36,0.2); }
+    .success-message {
+      background: rgba(212,237,218,0.9);
+      color: #155724;
+      border: 1px solid rgba(21,87,36,0.2);
+    }
+    .error-message {
+      background: rgba(248,215,218,0.9);
+      color: #721c24;
+      border: 1px solid rgba(114,28,36,0.2);
+    }
 
-    @media (max-width:800px) {
-      .metrics { grid-template-columns:1fr 1fr; }
-      .section-title { flex-direction:column; align-items:flex-start; gap:10px; }
-      .filters-section { flex-direction:column; align-items:stretch; }
-      .toolbar { justify-content:center; }
-      .modal-content { padding:20px; margin:10px; }
-      .todo-container { grid-template-columns:1fr; }
-      .form-row { grid-template-columns:1fr; }
-      .priority-selector { grid-template-columns:1fr; }
+    @media (max-width: 800px) {
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .section-title { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .filters-section { flex-direction: column; align-items: stretch; }
+      .toolbar { justify-content: center; }
+      .modal-content { padding: 20px; margin: 10px; }
+      .todo-container { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .priority-selector { grid-template-columns: 1fr; }
     }
-    @media (max-width:500px) {
-      .clients-table th, .clients-table td { padding:8px 10px; font-size:.85rem; }
-      .container { margin:10px; }
-      .header { padding:20px; }
-      .main-content { padding:20px; }
+    @media (max-width: 500px) {
+      .clients-table th,
+      .clients-table td {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+      }
+      .container { margin: 10px; }
+      .header { padding: 20px; }
+      .main-content { padding: 20px; }
     }
   </style>
 </head>
 <body>
   <!-- PM Dashboard -->
-  <!-- Step 2a: include the Supabase client -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>
-  const SUPABASE_URL     = 'https://ixeqixkfvkfeywrwqmxv.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4ZXFpeGtmdmtmZXl3cndxbXh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4NjkxMzksImV4cCI6MjA2NzQ0NTEzOX0.1Fm_t7LqNCtGKfE9N-LyODdhSJJWCE5xQjPvY_c8t2M';
-
-  // rename it to supabase so all your .from() calls below will work
-  const supabase = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-
-  async function loadFromSupabase() {
-    // now uses supabase.from(...)
-    let { data: clientsData, error: clientsError } = await supabase
-      .from('clients')
-      .select('*')
-      .order('name', { ascending: true });
-    if (clientsError) console.error(clientsError);
-    clients = clientsData || [];
-
-    let { data: tasksData, error: tasksError } = await supabase
-      .from('tasks')
-      .select('*')
-      .order('created', { ascending: false });
-    if (tasksError) console.error(tasksError);
-    tasks = tasksData || [];
-
-    filteredClients = [...clients];
-    renderClients();
-    renderTasks();
-    updateMetrics();
-  }
-
-  async function initializeApp() {
-    await loadFromSupabase();
-    setupEventListeners();
-    setupDropZones();
-    setupTaskDropZones();
-
-    // hook up realtime now that 'supabase' is correct
-    setupRealtime();
-  }
-
-  // realtime subscriptions will now work
-  function setupRealtime() {
-    supabase
-      .from('clients')
-      .on('INSERT', () => loadFromSupabase())
-      .on('UPDATE', () => loadFromSupabase())
-      .on('DELETE', () => loadFromSupabase())
-      .subscribe();
-
-    supabase
-      .from('tasks')
-      .on('INSERT', () => loadFromSupabase())
-      .on('UPDATE', () => loadFromSupabase())
-      .on('DELETE', () => loadFromSupabase())
-      .subscribe();
-  }
-
-  document.addEventListener('DOMContentLoaded', initializeApp);
-</script>
   <div id="mainDashboard" class="container drop-zone">
     <div class="header">
       <h1>PM Dashboard</h1>
@@ -564,7 +678,7 @@
 
       <div class="lost-section drop-zone" id="lostSection">
         <h3>Lost Clients (Auto-archived after 35 days)</h3>
-        <p>Drag clients here to mark them as lost • Drag lost clients back to restore</p>
+        <p>Drag clients here to mark them as lost • Drag lost clients back to restore them</p>
         <div class="lost-clients" id="lostClients"></div>
       </div>
 
@@ -737,135 +851,173 @@
     </div>
   </div>
 
+  <!-- Supabase & App Logic -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script>
-    // Global vars
-    let clients = [], lostClients = [], deletedClients = [], draggedElement = null;
-    let filteredClients = [], restoringClient = null, targetZone = null;
-    let tasks = [], draggedTask = null;
+    // 1) Create Supabase client
+    const SUPABASE_URL     = 'https://ixeqixkfvkfeywrwqmxv.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4ZXFpeGtmdmtmZXl3cndxbXh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4NjkxMzksImV4cCI6MjA2NzQ0NTEzOX0.1Fm_t7LqNCtGKfE9N-LyODdhSJJWCE5xQjPvY_c8t2M';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Formatting
+    // 2) Load from Supabase & render
+    async function loadFromSupabase() {
+      const { data: clientsData, error: clientsError } = await supabase
+        .from('clients')
+        .select('*')
+        .order('name', { ascending: true });
+      if (clientsError) {
+        console.error('Error loading clients:', clientsError);
+        return;
+      }
+      clients = (clientsData || []).map(c => ({
+        ...c,
+        clientLink: generateClientLink(c.id)
+      }));
+
+      const { data: tasksData, error: tasksError } = await supabase
+        .from('tasks')
+        .select('*')
+        .order('created', { ascending: false });
+      if (tasksError) {
+        console.error('Error loading tasks:', tasksError);
+        return;
+      }
+      tasks = tasksData || [];
+
+      filteredClients = [...clients];
+      renderClients();
+      renderTasks();
+      updateMetrics();
+    }
+
+    // 3) Initialize on DOM ready
+    async function initializeApp() {
+      await loadFromSupabase();
+      setupEventListeners();
+      setupDropZones();
+      setupTaskDropZones();
+      setupRealtime();
+    }
+
+    // 4) Setup realtime subscriptions
+    function setupRealtime() {
+      supabase
+        .from('clients')
+        .on('INSERT', loadFromSupabase)
+        .on('UPDATE', loadFromSupabase)
+        .on('DELETE', loadFromSupabase)
+        .subscribe();
+
+      supabase
+        .from('tasks')
+        .on('INSERT', loadFromSupabase)
+        .on('UPDATE', loadFromSupabase)
+        .on('DELETE', loadFromSupabase)
+        .subscribe();
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+    // ---------- All your existing JS functions below (unchanged) ----------
+    let clients = [], tasks = [], filteredClients = [], lostClients = [], deletedClients = [];
+    let draggedElement = null, draggedTask = null, restoringClient = null;
+
     const fmtCur = n => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);
     const fmtDate = d => new Date(d).toLocaleDateString();
     const daysSince = d => Math.floor((Date.now() - new Date(d)) / (1000*60*60*24));
     const typeIcon = t => ({consulting:'C',advertising:'A',development:'D',design:'De'})[t] || 'C';
 
-    // ========= Client Details Modal =========
-    function openClientModal(clientId) {
-      const c = clients.find(x=>x.id===clientId);
-      if (!c) return;
-      document.getElementById('dashClientName').textContent = c.name;
-      document.getElementById('dashEmail').textContent = c.email;
-      document.getElementById('dashPhone').textContent = c.phone;
-      document.getElementById('dashRevenue').textContent = fmtCur(c.monthlyRevenue);
-      document.getElementById('dashAdSpend').textContent = fmtCur(c.adSpend);
-      const roas = calculateROAS(c.monthlyRevenue, c.adSpend);
-      const roi  = calculateROI(c.monthlyRevenue, c.adSpend);
-      document.getElementById('dashROAS').textContent = roas.toFixed(2)+'x';
-      document.getElementById('dashROI').textContent  = roi.toFixed(1)+'%';
-      document.getElementById('dashStatus').textContent = c.status;
-      document.getElementById('dashLastContact').textContent = fmtDate(c.lastContact);
-      document.getElementById('dashProgress').textContent = c.progress+'%';
-      document.getElementById('dashFollowUp').textContent = c.followUp ? 'Yes' : 'No';
-      document.getElementById('clientDashboardModal').classList.add('active');
-    }
-    function closeClientModal() {
-      document.getElementById('clientDashboardModal').classList.remove('active');
+    function generateClientLink(id){
+      const base = `${window.location.origin}${window.location.pathname}`;
+      const token = btoa(id + '_' + Date.now()).replace(/[^a-zA-Z0-9]/g, '').substring(0,16);
+      return `${base}?client=${token}&id=${id}`;
     }
 
-    // ========= Other Modals =========
-    function openModal(){ document.getElementById('clientModal').classList.add('active'); }
-    function closeModal(){
-      const m=document.getElementById('clientModal');
-      m.classList.remove('active');
-      document.getElementById('clientForm').reset();
-      document.getElementById('formMessages').innerHTML = '';
-    }
-    function openTaskModal(){
-      const m=document.getElementById('taskModal');
-      m.classList.add('active');
-      document.getElementById('taskForm').reset();
-      document.getElementById('taskFormMessages').innerHTML = '';
-    }
-    function closeTaskModal(){ document.getElementById('taskModal').classList.remove('active'); }
-    function showStatusModal(){ document.getElementById('statusModal').classList.add('active'); }
-    function closeStatusModal(){ document.getElementById('statusModal').classList.remove('active'); restoringClient=null; targetZone=null; }
-    function selectStatus(s){
-      document.querySelector(`input[value="${s}"]`).checked = true;
-      document.querySelectorAll('.status-option').forEach(o=>o.classList.remove('selected'));
-      event.currentTarget.classList.add('selected');
-    }
-    function confirmStatusSelection(){
-      const sel = document.querySelector('input[name="newStatus"]:checked');
-      if(sel && restoringClient) { restoreClientFromLost(restoringClient.id, sel.value); closeStatusModal(); }
-      else showMessage('Please select a status','error');
-    }
-
-    // ========= Utility =========
-    function calculateROAS(r,a){ return a>0 ? r/a : 0; }
-    function calculateROI(r,a){ return a>0 ? ((r-a)/a)*100 : 0; }
-    function getROIBadgeClass(roi){ if(roi>20)return'roi-positive'; if(roi<0)return'roi-negative'; return'roi-neutral'; }
-
-    // ========= Rendering =========
     function renderClients(){
-      const tb=document.getElementById('clientsTableBody');
-      tb.innerHTML='';
+      const tb = document.getElementById('clientsTableBody');
+      tb.innerHTML = '';
       filteredClients.forEach(c=>{
-        const days=daysSince(c.lastContact), needs=c.followUp||days>30;
-        const roas=calculateROAS(c.monthlyRevenue,c.adSpend);
-        const roi=calculateROI(c.monthlyRevenue,c.adSpend);
-        const tr=document.createElement('tr');
-        tr.className='client-row';
-        tr.draggable=true;
-        tr.dataset.clientId=c.id;
-        tr.innerHTML=`
+        const days = daysSince(c.lastContact);
+        const needs = c.followUp || days > 30;
+        const roas = calculateROAS(c.monthlyRevenue, c.adSpend);
+        const roi  = calculateROI(c.monthlyRevenue, c.adSpend);
+        const tr = document.createElement('tr');
+        tr.className = 'client-row';
+        tr.draggable = true;
+        tr.dataset.clientId = c.id;
+        tr.innerHTML = `
           <td>${typeIcon(c.type)}</td>
-          <td><span onclick="openClientModal(${c.id})" style="cursor:pointer;color:#3b49df;font-weight:bold;text-decoration:underline;">${c.name}</span></td>
+          <td><span onclick="openClientModal(${c.id})"
+                     style="cursor:pointer;color:#3b49df;font-weight:bold;text-decoration:underline;">
+                     ${c.name}
+                 </span></td>
           <td>${c.email}</td>
           <td>${c.phone}</td>
           <td><strong>${fmtCur(c.monthlyRevenue)}</strong></td>
           <td>${fmtCur(c.adSpend)}</td>
-          <td>${roas.toFixed(2)}x<span class="roi-badge ${getROIBadgeClass(roi)}">${roas>=2?'Good':roas>=1?'OK':'Poor'}</span></td>
-          <td>${roi.toFixed(1)}%<span class="roi-badge ${getROIBadgeClass(roi)}">${roi>20?'High':roi>0?'Positive':'Negative'}</span></td>
-          <td><span class="status-badge status-${c.status}">${c.status.replace('-',' ')}</span></td>
+          <td>${roas.toFixed(2)}x<span class="roi-badge ${getROIBadgeClass(roi)}">
+                 ${roas>=2?'Good':roas>=1?'OK':'Poor'}
+               </span></td>
+          <td>${roi.toFixed(1)}%<span class="roi-badge ${getROIBadgeClass(roi)}">
+                 ${roi>20?'High':roi>0?'Positive':'Negative'}
+               </span></td>
+          <td><span class="status-badge status-${c.status}">
+                 ${c.status.replace('-',' ')}
+               </span></td>
           <td>${fmtDate(c.lastContact)}<br><small>${days}d ago</small></td>
-          <td><div class="progress-bar"><div class="progress-fill" style="width:${c.progress}%"></div></div><small>${c.progress}%</small></td>
+          <td>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:${c.progress}%"></div>
+            </div>
+            <small>${c.progress}%</small>
+          </td>
           <td>${needs?'🚩':'✅'}</td>
         `;
-        tr.addEventListener('dragstart',handleDragStart);
-        tr.addEventListener('dragend',handleDragEnd);
+        tr.addEventListener('dragstart', handleDragStart);
+        tr.addEventListener('dragend',   handleDragEnd);
         tb.appendChild(tr);
       });
     }
+
     function renderLost(){
-      const lc=document.getElementById('lostClients');
-      lc.innerHTML='';
-      if(!lostClients.length){ lc.innerHTML='<p style="color:#666;font-style:italic;text-align:center;padding:20px;">No lost clients</p>'; return; }
+      const lc = document.getElementById('lostClients');
+      lc.innerHTML = '';
+      if (!lostClients.length) {
+        lc.innerHTML = '<p style="color:#666;font-style:italic;text-align:center;padding:20px;">No lost clients</p>';
+        return;
+      }
       lostClients.forEach(c=>{
-        const days=daysSince(c.lostDate);
-        const d=document.createElement('div');
-        d.className='lost-client-card';
-        d.draggable=true;
-        d.dataset.clientId=c.id;
-        d.innerHTML=`
+        const days = daysSince(c.lostDate);
+        const d = document.createElement('div');
+        d.className = 'lost-client-card';
+        d.draggable = true;
+        d.dataset.clientId = c.id;
+        d.innerHTML = `
           <h4>${c.name}</h4>
           <p>${c.email}</p>
           <p><strong>Lost:</strong> ${fmtCur(c.monthlyRevenue)}</p>
           <p><small>Lost ${days} days ago</small></p>
-          ${days>30?`<p style="color:orange;font-size:.8em;">⚠️ Archives in ${35-days} days</p>`:''}
+          ${days>30?`<p style="color:orange;font-size:.8em;">
+                         ⚠️ Archives in ${35-days} days
+                       </p>`:''}
         `;
-        d.addEventListener('dragstart',handleDragStart);
-        d.addEventListener('dragend',handleDragEnd);
+        d.addEventListener('dragstart', handleDragStart);
+        d.addEventListener('dragend',   handleDragEnd);
         lc.appendChild(d);
       });
     }
+
     function renderDeleted(){
-      const dc=document.getElementById('deletedClients');
-      dc.innerHTML='';
-      if(!deletedClients.length){ dc.innerHTML='<p style="color:#666;font-style:italic;text-align:center;padding:20px;">No deleted clients</p>'; return; }
+      const dc = document.getElementById('deletedClients');
+      dc.innerHTML = '';
+      if (!deletedClients.length) {
+        dc.innerHTML = '<p style="color:#666;font-style:italic;text-align:center;padding:20px;">No deleted clients</p>';
+        return;
+      }
       deletedClients.forEach(c=>{
-        const d=document.createElement('div');
-        d.className='deleted-client-card';
-        d.innerHTML=`
+        const d = document.createElement('div');
+        d.className = 'deleted-client-card';
+        d.innerHTML = `
           <h4>${c.name}</h4>
           <p>${c.email}</p>
           <p><strong>Revenue:</strong> ${fmtCur(c.monthlyRevenue)}</p>
@@ -875,61 +1027,89 @@
       });
     }
 
-    // ========= Filters & Metrics =========
+    /* Filters & Metrics */
     function applyFilters(){
-      const sv=document.getElementById('statusFilter').value;
-      const minR=parseFloat(document.getElementById('minRevenue').value)||0;
-      const maxR=parseFloat(document.getElementById('maxRevenue').value)||Infinity;
-      const minRo=parseFloat(document.getElementById('minROAS').value)||0;
-      const tv=document.getElementById('typeFilter').value;
-      filteredClients=clients.filter(c=>{
-        const roa=calculateROAS(c.monthlyRevenue,c.adSpend);
-        return (!sv||c.status===sv)
-            && c.monthlyRevenue>=minR
-            && c.monthlyRevenue<=maxR
-            && roa>=minRo
-            && (!tv||c.type===tv);
+      const sv    = document.getElementById('statusFilter').value;
+      const minR  = parseFloat(document.getElementById('minRevenue').value)||0;
+      const maxR  = parseFloat(document.getElementById('maxRevenue').value)||Infinity;
+      const minRo = parseFloat(document.getElementById('minROAS').value)||0;
+      const tv    = document.getElementById('typeFilter').value;
+      filteredClients = clients.filter(c=>{
+        const roa = calculateROAS(c.monthlyRevenue, c.adSpend);
+        return (
+          (!sv  || c.status===sv) &&
+          c.monthlyRevenue>=minR &&
+          c.monthlyRevenue<=maxR &&
+          roa>=minRo &&
+          (!tv  || c.type===tv)
+        );
       });
-      renderClients(); updateMetrics();
-    }
-    function updateMetrics(){
-      const ar=filteredClients.filter(c=>c.status==='active').reduce((s,c)=>s+c.monthlyRevenue,0);
-      const rr=filteredClients.filter(c=>c.status==='at-risk').reduce((s,c)=>s+c.monthlyRevenue,0);
-      const lr=lostClients.reduce((s,c)=>s+c.monthlyRevenue,0);
-      const total=filteredClients.reduce((s,c)=>s+c.monthlyRevenue,0);
-      const spend=filteredClients.reduce((s,c)=>s+c.adSpend,0);
-      const avgR=calculateROAS(total,spend), avgI=calculateROI(total,spend);
-      document.getElementById('totalRevenue').textContent=fmtCur(ar);
-      document.getElementById('atRiskRevenue').textContent=fmtCur(rr);
-      document.getElementById('lostRevenue').textContent=fmtCur(lr);
-      document.getElementById('clientCount').textContent=filteredClients.length;
-      document.getElementById('totalROAS').textContent=avgR.toFixed(2)+'x';
-      document.getElementById('totalROI').textContent=avgI.toFixed(1)+'%';
+      renderClients();
+      updateMetrics();
     }
 
-    // ========= Exports & Links =========
+    function updateMetrics(){
+      const ar    = filteredClients.filter(c=>c.status==='active')
+                                   .reduce((s,c)=>s+c.monthlyRevenue,0);
+      const rr    = filteredClients.filter(c=>c.status==='at-risk')
+                                   .reduce((s,c)=>s+c.monthlyRevenue,0);
+      const lr    = lostClients.reduce((s,c)=>s+c.monthlyRevenue,0);
+      const total = filteredClients.reduce((s,c)=>s+c.monthlyRevenue,0);
+      const spend = filteredClients.reduce((s,c)=>s+c.adSpend,0);
+      const avgR  = calculateROAS(total, spend);
+      const avgI  = calculateROI(total, spend);
+      document.getElementById('totalRevenue').textContent = fmtCur(ar);
+      document.getElementById('atRiskRevenue').textContent = fmtCur(rr);
+      document.getElementById('lostRevenue').textContent   = fmtCur(lr);
+      document.getElementById('clientCount').textContent   = filteredClients.length;
+      document.getElementById('totalROAS').textContent    = avgR.toFixed(2)+'x';
+      document.getElementById('totalROI').textContent     = avgI.toFixed(1)+'%';
+    }
+
+    function calculateROAS(r,a){ return a>0 ? r/a : 0; }
+    function calculateROI(r,a){ return a>0 ? ((r-a)/a)*100 : 0; }
+    function getROIBadgeClass(roi){
+      if (roi>20) return 'roi-positive';
+      if (roi<0)  return 'roi-negative';
+      return 'roi-neutral';
+    }
+
+    /* Exports & Links */
     function exportToPDF(){ window.print(); }
     function exportToCSV(){
-      const headers=['Client Name','Email','Phone','Monthly Revenue','Ad Spend','ROAS','ROI','Status','Last Contact'];
-      const rows=filteredClients.map(c=>[
-        c.name,c.email,c.phone,c.monthlyRevenue,c.adSpend,
+      const headers = ['Client Name','Email','Phone','Monthly Revenue','Ad Spend','ROAS','ROI','Status','Last Contact'];
+      const rows = filteredClients.map(c=>[
+        c.name,
+        c.email,
+        c.phone,
+        c.monthlyRevenue,
+        c.adSpend,
         calculateROAS(c.monthlyRevenue,c.adSpend).toFixed(2),
         calculateROI(c.monthlyRevenue,c.adSpend).toFixed(1)+'%',
-        c.status,c.lastContact
+        c.status,
+        c.lastContact
       ]);
-      const csv=[headers,...rows].map(r=>r.join(',')).join('\n');
-      const blob=new Blob([csv],{type:'text/csv'}), url=URL.createObjectURL(blob);
-      const a=document.createElement('a'); a.href=url; a.download=`crm_report_${new Date().toISOString().split('T')[0]}.csv`; a.click(); URL.revokeObjectURL(url);
+      const csv = [headers, ...rows].map(r=>r.join(',')).join('\n');
+      const blob = new Blob([csv], { type:'text/csv' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url;
+      a.download = `crm_report_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
     }
     function exportToExcel(){ exportToCSV(); }
+
     function openLinkGenerator(){
-      const sec=document.getElementById('clientLinkSection'), cont=document.getElementById('generatedLinks');
+      const sec  = document.getElementById('clientLinkSection');
+      const cont = document.getElementById('generatedLinks');
       sec.style.display = sec.style.display==='block'?'none':'block';
-      if(sec.style.display==='block'){
-        cont.innerHTML='';
+      if (sec.style.display==='block') {
+        cont.innerHTML = '';
         clients.forEach(c=>{
-          const div=document.createElement('div'); div.style.marginBottom='15px';
-          div.innerHTML=`
+          const div = document.createElement('div');
+          div.style.marginBottom = '15px';
+          div.innerHTML = `
             <strong>${c.name}:</strong>
             <input class="client-link-input" value="${c.clientLink}" readonly/>
             <button class="copy-link-btn" onclick="copyToClipboard('${c.clientLink}')">Copy Link</button>
@@ -938,231 +1118,345 @@
         });
       }
     }
-    function copyToClipboard(t){
-      if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>showMessage('Link copied!','success')).catch(()=>fallbackCopyTextToClipboard(t));
-      else fallbackCopyTextToClipboard(t);
+
+    function copyToClipboard(text){
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(()=>showMessage('Link copied!','success'))
+                                        .catch(()=>fallbackCopyTextToClipboard(text));
+      } else {
+        fallbackCopyTextToClipboard(text);
+      }
     }
-    function fallbackCopyTextToClipboard(t){
-      const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select();
-      try{document.execCommand('copy'); showMessage('Link copied!','success');}catch{showMessage('Copy failed','error');}
+    function fallbackCopyTextToClipboard(text){
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showMessage('Link copied!','success');
+      } catch {
+        showMessage('Copy failed','error');
+      }
       document.body.removeChild(ta);
     }
+
     function showMessage(msg,type){
-      const n=document.createElement('div'); n.className=`${type}-message`; n.textContent=msg;
-      n.style.position='fixed'; n.style.top='20px'; n.style.right='20px'; n.style.zIndex='10000';
+      const n = document.createElement('div');
+      n.className = `${type}-message`;
+      n.textContent = msg;
+      n.style.position = 'fixed';
+      n.style.top = '20px';
+      n.style.right = '20px';
+      n.style.zIndex = '10000';
       document.body.appendChild(n);
       setTimeout(()=>n.remove(),3000);
     }
 
-    // ========= Drag & Drop =========
-    function handleDragStart(e){ draggedElement=e.target; e.target.classList.add('dragging'); e.dataTransfer.setData('text/plain',e.target.dataset.clientId); }
-    function handleDragEnd(e){ e.target.classList.remove('dragging'); setTimeout(()=>draggedElement=null,100); }
+    /* Drag & Drop Clients */
+    function handleDragStart(e){
+      draggedElement = e.target;
+      e.target.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', e.target.dataset.clientId);
+    }
+    function handleDragEnd(e){
+      e.target.classList.remove('dragging');
+      setTimeout(()=>draggedElement=null, 100);
+    }
     function setupDropZones(){
       ['mainDashboard','lostSection'].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el){
-          el.addEventListener('dragover',e=>{ e.preventDefault(); if(id==='lostSection') el.classList.add('drag-over'); });
-          el.addEventListener('drop',e=>{
-            e.preventDefault(); if(id==='lostSection') el.classList.remove('drag-over');
-            if(!draggedElement) return;
-            const cid=+draggedElement.dataset.clientId;
-            const fromLost=draggedElement.classList.contains('lost-client-card');
-            if(fromLost && id!=='lostSection'){ restoringClient=lostClients.find(x=>x.id===cid); showStatusModal(); }
-            else if(!fromLost && id==='lostSection'){ moveClientToLost(cid); }
-          });
-        }
-      });
-    }
-    function moveClientToLost(cid){
-      const idx=clients.findIndex(x=>x.id===cid);
-      if(idx>-1){
-        const c=clients.splice(idx,1)[0];
-        c.status='lost'; c.lostDate=new Date().toISOString().split('T')[0];
-        lostClients.push(c);
-        applyFilters(); showMessage('Moved to lost','success');
-      }
-    }
-    function restoreClientFromLost(cid,newStatus){
-      const idx=lostClients.findIndex(x=>x.id===cid);
-      if(idx>-1){
-        const c=lostClients.splice(idx,1)[0];
-        c.status=newStatus; delete c.lostDate;
-        clients.push(c);
-        applyFilters(); showMessage(`Restored as ${newStatus}`,'success');
-      }
-    }
-
-    // ========= Tasks Drag & Drop =========
-    function handleTaskDragStart(e){ draggedTask=e.target; e.target.classList.add('dragging'); e.dataTransfer.setData('text/plain',e.target.dataset.taskId); }
-    function handleTaskDragEnd(e){ e.target.classList.remove('dragging'); setTimeout(()=>draggedTask=null,100); }
-    function setupTaskDropZones(){
-      document.querySelectorAll('.todo-column').forEach(col=>{
-        col.addEventListener('dragover',e=>{e.preventDefault(); col.classList.add('drag-over');});
-        col.addEventListener('dragleave',e=>{ if(!col.contains(e.relatedTarget)) col.classList.remove('drag-over'); });
-        col.addEventListener('drop',e=>{
-          e.preventDefault(); col.classList.remove('drag-over');
-          if(!draggedTask) return;
-          const tid=+draggedTask.dataset.taskId;
-          updateTaskPriority(tid,col.dataset.priority);
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('dragover', e=>{
+          e.preventDefault();
+          if (id==='lostSection') el.classList.add('drag-over');
+        });
+        el.addEventListener('dragleave', ()=>{
+          if (id==='lostSection') el.classList.remove('drag-over');
+        });
+        el.addEventListener('drop', e=>{
+          e.preventDefault();
+          if (id==='lostSection') el.classList.remove('drag-over');
+          if (!draggedElement) return;
+          const cid = +draggedElement.dataset.clientId;
+          const fromLost = draggedElement.classList.contains('lost-client-card');
+          if (fromLost && id!=='lostSection') {
+            restoringClient = lostClients.find(x=>x.id===cid);
+            showStatusModal();
+          } else if (!fromLost && id==='lostSection') {
+            moveClientToLost(cid);
+          }
         });
       });
     }
+    function moveClientToLost(cid){
+      const idx = clients.findIndex(x=>x.id===cid);
+      if (idx>-1) {
+        const c = clients.splice(idx,1)[0];
+        c.status = 'lost';
+        c.lostDate = new Date().toISOString().split('T')[0];
+        lostClients.push(c);
+        applyFilters();
+        showMessage('Moved to lost','success');
+      }
+    }
+    function restoreClientFromLost(cid,newStatus){
+      const idx = lostClients.findIndex(x=>x.id===cid);
+      if (idx>-1) {
+        const c = lostClients.splice(idx,1)[0];
+        c.status = newStatus;
+        delete c.lostDate;
+        clients.push(c);
+        applyFilters();
+        showMessage(`Restored as ${newStatus}`,'success');
+      }
+    }
+
+    /* Drag & Drop Tasks */
+    function handleTaskDragStart(e){
+      draggedTask = e.target;
+      e.target.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', e.target.dataset.taskId);
+    }
+    function handleTaskDragEnd(e){
+      e.target.classList.remove('dragging');
+      setTimeout(()=>draggedTask=null, 100);
+    }
+    function setupTaskDropZones(){
+      document.querySelectorAll('.todo-column').forEach(col=>{
+        col.addEventListener('dragover', e=>{
+          e.preventDefault();
+          col.classList.add('drag-over');
+        });
+        col.addEventListener('dragleave', e=>{
+          if (!col.contains(e.relatedTarget)) col.classList.remove('drag-over');
+        });
+        col.addEventListener('drop', e=>{
+          e.preventDefault();
+          col.classList.remove('drag-over');
+          if (!draggedTask) return;
+          const tid = +draggedTask.dataset.taskId;
+          updateTaskPriority(tid, col.dataset.priority);
+        });
+      });
+    }
+    function updateTaskPriority(tid,newP){
+      const t = tasks.find(x=>x.id===tid);
+      if (t && t.priority!==newP) {
+        t.priority = newP;
+        t.updatedAt = new Date().toISOString();
+        renderTasks();
+        showMessage(`Moved to ${newP}`,'success');
+      }
+    }
     function createTaskCard(t){
-      const d=document.createElement('div');
-      d.className=`task-card ${t.priority}`; d.draggable=true; d.dataset.taskId=t.id;
-      d.innerHTML=`<div class="task-title">${t.title}</div><div class="task-assignee">${t.assignee}</div><div class="task-meta"><div class="task-date">${formatTaskDate(t.created)}</div></div>`;
-      d.addEventListener('dragstart',handleTaskDragStart);
-      d.addEventListener('dragend',handleTaskDragEnd);
+      const d = document.createElement('div');
+      d.className = `task-card ${t.priority}`;
+      d.draggable = true;
+      d.dataset.taskId = t.id;
+      d.innerHTML = `
+        <div class="task-title">${t.title}</div>
+        <div class="task-assignee">${t.assignee}</div>
+        <div class="task-meta">
+          <div class="task-date">${formatTaskDate(t.created)}</div>
+        </div>
+      `;
+      d.addEventListener('dragstart', handleTaskDragStart);
+      d.addEventListener('dragend',   handleTaskDragEnd);
       return d;
     }
     function renderTasks(){
-      const u=document.getElementById('urgentTasks'), m=document.getElementById('moderateTasks'), d=document.getElementById('doneTasks');
-      u.innerHTML=''; m.innerHTML=''; d.innerHTML='';
+      const u = document.getElementById('urgentTasks');
+      const m = document.getElementById('moderateTasks');
+      const d = document.getElementById('doneTasks');
+      u.innerHTML = ''; m.innerHTML = ''; d.innerHTML = '';
       tasks.forEach(t=>{
-        const card=createTaskCard(t);
-        if(t.priority==='urgent') u.appendChild(card);
-        if(t.priority==='moderate') m.appendChild(card);
-        if(t.priority==='done') d.appendChild(card);
+        const card = createTaskCard(t);
+        if (t.priority==='urgent')   u.appendChild(card);
+        if (t.priority==='moderate') m.appendChild(card);
+        if (t.priority==='done')     d.appendChild(card);
       });
-      if(!u.children.length) u.innerHTML='<p style="text-align:center;color:#999;padding:20px;">No urgent tasks</p>';
-      if(!m.children.length) m.innerHTML='<p style="text-align:center;color:#999;padding:20px;">No moderate tasks</p>';
-      if(!d.children.length) d.innerHTML='<p style="text-align:center;color:#999;padding:20px;">No completed tasks</p>';
-    }
-    function updateTaskPriority(tid,newP){
-      const t=tasks.find(x=>x.id===tid);
-      if(t && t.priority!==newP){ t.priority=newP; t.updatedAt=new Date().toISOString(); renderTasks(); showMessage(`Moved to ${newP}`,'success'); }
+      if (!u.children.length) u.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">No urgent tasks</p>';
+      if (!m.children.length) m.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">No moderate tasks</p>';
+      if (!d.children.length) d.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">No completed tasks</p>';
     }
     function formatTaskDate(ds){
-      const d=new Date(ds), now=new Date();
-      const diff=Math.floor((now-d)/(1000*60*60*24));
-      if(diff===0) return 'Today';
-      if(diff===1) return 'Yesterday';
-      if(diff<7) return `${diff} days ago`;
+      const d   = new Date(ds);
+      const now = new Date();
+      const diff= Math.floor((now - d)/(1000*60*60*24));
+      if (diff===0) return 'Today';
+      if (diff===1) return 'Yesterday';
+      if (diff<7)  return `${diff} days ago`;
       return d.toLocaleDateString();
     }
 
-    // ========= Task Form =========
-    async function handleTaskSubmission(e) {
-  e.preventDefault();
-  const msgs = document.getElementById('taskFormMessages');
-  const fd   = new FormData(e.target);
-
-  // build the new task object
-  const newTask = {
-    title:       fd.get('title'),
-    description: fd.get('description') || '',
-    assignee:    fd.get('assignee'),
-    priority:    fd.get('priority'),
-    created:     new Date().toISOString()
-  };
-
-  if (!newTask.title || !newTask.assignee || !newTask.priority) {
-    throw new Error('Please fill in all required fields');
-  }
-
-  // insert into Supabase
-  const { data, error } = await supabase
-    .from('tasks')
-    .insert([ newTask ]);
-
-  if (error) {
-    console.error('Error inserting task:', error);
-    showMessage('❌ Failed to create task','error');
-  } else {
-    showMessage('✅ Task created!','success');
-    closeTaskModal();
-    // re-fetch & re-render everything
-    await loadFromSupabase();
-  }
-}
-// make sure your form is still wired up to this function:
-document.getElementById('taskForm')
-  .removeEventListener('submit', handleTaskSubmission);
-document.getElementById('taskForm')
-  .addEventListener('submit', handleTaskSubmission);
-    // ========= Client Form =========
-    function setupEventListeners() {
-  // === Client Form ===
-  document.getElementById('clientForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const newClient = {
-      type:            fd.get('client_type'),
-      name:            fd.get('name'),
-      email:           fd.get('email'),
-      phone:           fd.get('phone'),
-      billing_address: fd.get('billing_address'),
-      start_date:      fd.get('start_date'),
-      monthly_revenue: parseFloat(fd.get('monthly_revenue')),
-      ad_spend:        parseFloat(fd.get('monthly_ad_spend')),
-      status:          fd.get('status'),
-      last_contact:    fd.get('last_contact'),
-    };
-    
-    const { data, error } = await supabase
-      .from('clients')
-      .insert([ newClient ]);
-
-    if (error) {
-      console.error('Error inserting client:', error);
-      showMessage('❌ Failed to add client','error');
-    } else {
-      showMessage('✅ Client added!','success');
-      closeModal();
-      // re-fetch & re-render from Supabase
-      await loadFromSupabase();
+    /* Task Form Submit */
+    async function handleTaskSubmission(e){
+      e.preventDefault();
+      const msgs = document.getElementById('taskFormMessages');
+      const fd   = new FormData(e.target);
+      const newTask = {
+        title:       fd.get('title'),
+        description: fd.get('description')||'',
+        assignee:    fd.get('assignee'),
+        priority:    fd.get('priority'),
+        created:     new Date().toISOString()
+      };
+      if (!newTask.title||!newTask.assignee||!newTask.priority) {
+        throw new Error('Please fill in all required fields');
+      }
+      const { error } = await supabase
+        .from('tasks')
+        .insert([ newTask ]);
+      if (error) {
+        console.error('Error inserting task:', error);
+        showMessage('❌ Failed to create task','error');
+      } else {
+        showMessage('✅ Task created!','success');
+        closeTaskModal();
+        await loadFromSupabase();
+      }
     }
-  });
+    document.getElementById('taskForm')
+      .removeEventListener('submit', handleTaskSubmission);
+    document.getElementById('taskForm')
+      .addEventListener('submit', handleTaskSubmission);
 
-  // your existing taskForm & keydown listeners…
-}
-      document.getElementById('taskForm').addEventListener('submit',handleTaskSubmission);
-      document.addEventListener('keydown',e=>{
-        if(e.key==='Escape'){
+    /* Client Form */
+    function setupEventListeners(){
+      document.getElementById('clientForm')
+        .addEventListener('submit', async e=>{
+          e.preventDefault();
+          const fd = new FormData(e.target);
+          const newClient = {
+            type:            fd.get('client_type'),
+            name:            fd.get('name'),
+            email:           fd.get('email'),
+            phone:           fd.get('phone'),
+            billing_address: fd.get('billing_address'),
+            start_date:      fd.get('start_date'),
+            monthly_revenue: parseFloat(fd.get('monthly_revenue')),
+            ad_spend:        parseFloat(fd.get('monthly_ad_spend')),
+            status:          fd.get('status'),
+            last_contact:    fd.get('last_contact'),
+          };
+          const { error } = await supabase
+            .from('clients')
+            .insert([ newClient ]);
+          if (error) {
+            console.error('Error inserting client:', error);
+            showMessage('❌ Failed to add client','error');
+          } else {
+            showMessage('✅ Client added!','success');
+            closeModal();
+            await loadFromSupabase();
+          }
+        });
+
+      document.addEventListener('keydown', e=>{
+        if (e.key==='Escape') {
           ['clientModal','statusModal','taskModal','clientDashboardModal'].forEach(id=>{
-            const m=document.getElementById(id);
-            if(m?.classList.contains('active')) m.classList.remove('active');
+            const m = document.getElementById(id);
+            if (m?.classList.contains('active')) m.classList.remove('active');
           });
         }
       });
     }
 
-    // ========= Sample Data & Init =========
+    /* Sample Data (fallback) */
     function initializeSampleData(){
-      if(!clients.length){
-        clients=[
+      if (!clients.length) {
+        clients = [
           {id:1,type:'consulting',name:'Acme Corp',email:'contact@acme.com',phone:'(555)123-4567',monthlyRevenue:5000,adSpend:2000,status:'active',lastContact:'2024-12-15',progress:85,followUp:true,clientLink:''},
           {id:2,type:'advertising',name:'TechStart Inc',email:'hello@techstart.com',phone:'(555)987-6543',monthlyRevenue:8500,adSpend:3500,status:'at-risk',lastContact:'2024-11-28',progress:45,followUp:false,clientLink:''},
           {id:3,type:'development',name:'Global Solutions',email:'info@global.com',phone:'(555)456-7890',monthlyRevenue:12000,adSpend:4000,status:'active',lastContact:'2024-12-20',progress:92,followUp:false,clientLink:''}
         ];
         clients.forEach(c=>c.clientLink=generateClientLink(c.id));
       }
-      if(!tasks.length){
-        tasks=[
+      if (!tasks.length) {
+        tasks = [
           {id:1,title:'Update Acme Corp Website',description:'Need to update the homepage.',assignee:'Preston',priority:'urgent',created:new Date().toISOString()},
           {id:2,title:'Review TechStart Campaign',description:'Analyze Q4 metrics.',assignee:'Felipe',priority:'moderate',created:new Date(Date.now()-86400000).toISOString()}
         ];
       }
-      filteredClients=[...clients];
+      filteredClients = [...clients];
       setTimeout(()=>{
         renderClients(); renderLost(); renderDeleted(); updateMetrics(); renderTasks();
       },100);
     }
 
-    function generateClientLink(id){
-      const base=`${window.location.origin}${window.location.pathname}`;
-      const token=btoa(id+'_'+Date.now()).replace(/[^a-zA-Z0-9]/g,'').substr(0,16);
-      return `${base}?client=${token}&id=${id}`;
+    /* Modal Helpers */
+    function openClientModal(clientId){
+      const c = clients.find(x=>x.id===clientId);
+      if (!c) return;
+      document.getElementById('dashClientName').textContent   = c.name;
+      document.getElementById('dashEmail').textContent        = c.email;
+      document.getElementById('dashPhone').textContent        = c.phone;
+      document.getElementById('dashRevenue').textContent      = fmtCur(c.monthlyRevenue);
+      document.getElementById('dashAdSpend').textContent      = fmtCur(c.adSpend);
+      document.getElementById('dashROAS').textContent         = calculateROAS(c.monthlyRevenue,c.adSpend).toFixed(2)+'x';
+      document.getElementById('dashROI').textContent          = calculateROI(c.monthlyRevenue,c.adSpend).toFixed(1)+'%';
+      document.getElementById('dashStatus').textContent       = c.status;
+      document.getElementById('dashLastContact').textContent  = fmtDate(c.lastContact);
+      document.getElementById('dashProgress').textContent     = c.progress+'%';
+      document.getElementById('dashFollowUp').textContent     = c.followUp?'Yes':'No';
+      document.getElementById('clientDashboardModal').classList.add('active');
+    }
+    function closeClientModal(){
+      document.getElementById('clientDashboardModal').classList.remove('active');
+    }
+    function openModal(){
+      document.getElementById('clientModal').classList.add('active');
+    }
+    function closeModal(){
+      const m = document.getElementById('clientModal');
+      m.classList.remove('active');
+      document.getElementById('clientForm').reset();
+      document.getElementById('formMessages').innerHTML = '';
+    }
+    function openTaskModal(){
+      const m = document.getElementById('taskModal');
+      m.classList.add('active');
+      document.getElementById('taskForm').reset();
+      document.getElementById('taskFormMessages').innerHTML = '';
+    }
+    function closeTaskModal(){
+      document.getElementById('taskModal').classList.remove('active');
+    }
+    function showStatusModal(){
+      document.getElementById('statusModal').classList.add('active');
+    }
+    function closeStatusModal(){
+      document.getElementById('statusModal').classList.remove('active');
+      restoringClient = null;
+    }
+    function selectStatus(s){
+      document.querySelector(`input[value="${s}"]`).checked = true;
+      document.querySelectorAll('.status-option').forEach(o=>o.classList.remove('selected'));
+      event.currentTarget.classList.add('selected');
+    }
+    function confirmStatusSelection(){
+      const sel = document.querySelector('input[name="newStatus"]:checked');
+      if (sel && restoringClient) {
+        restoreClientFromLost(restoringClient.id, sel.value);
+        closeStatusModal();
+      } else {
+        showMessage('Please select a status','error');
+      }
     }
 
-    function initializeApp(){
-      initializeSampleData();
-      setupEventListeners();
-      setupDropZones();
-      setupTaskDropZones();
-    }
-
-    document.addEventListener('DOMContentLoaded', initializeApp);
+    // Kick off fallback sample data if Supabase fails
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // If Supabase didn't load any data in 2s, show sample
+      setTimeout(()=>{
+        if (!clients.length && !tasks.length) {
+          initializeSampleData();
+        }
+      },2000);
+    });
   </script>
 </body>
 </html>
