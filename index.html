@@ -368,68 +368,65 @@
   <!-- PM Dashboard -->
   <!-- Step 2a: include the Supabase client -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script>
-  // Step 2b: initialize Supabase
+<script>
   const SUPABASE_URL     = 'https://ixeqixkfvkfeywrwqmxv.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4ZXFpeGtmdmtmZXl3cndxbXh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4NjkxMzksImV4cCI6MjA2NzQ0NTEzOX0.1Fm_t7LqNCtGKfE9N-LyODdhSJJWCE5xQjPvY_c8t2M';
-  const supabaseClient = supabase.createClient(
+
+  // rename it to supabase so all your .from() calls below will work
+  const supabase = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
   );
 
-  // Step 1: fetch live data from Supabase
   async function loadFromSupabase() {
-    // fetch clients
-    let { data: clientsData, error: clientsError } = await supabaseClient
+    // now uses supabase.from(...)
+    let { data: clientsData, error: clientsError } = await supabase
       .from('clients')
       .select('*')
       .order('name', { ascending: true });
-    if (clientsError) {
-      console.error('Error loading clients:', clientsError);
-      return;
-    }
-    clients = clientsData;
+    if (clientsError) console.error(clientsError);
+    clients = clientsData || [];
 
-    // fetch tasks
-    let { data: tasksData, error: tasksError } = await supabaseClient
+    let { data: tasksData, error: tasksError } = await supabase
       .from('tasks')
       .select('*')
       .order('created', { ascending: false });
-    if (tasksError) {
-      console.error('Error loading tasks:', tasksError);
-      return;
-    }
-    tasks = tasksData;
+    if (tasksError) console.error(tasksError);
+    tasks = tasksData || [];
 
-    // render everything
     filteredClients = [...clients];
     renderClients();
     renderTasks();
     updateMetrics();
   }
 
-  // Replace your old initialize call
   async function initializeApp() {
     await loadFromSupabase();
     setupEventListeners();
     setupDropZones();
     setupTaskDropZones();
+
+    // hook up realtime now that 'supabase' is correct
+    setupRealtime();
   }
-// ======== Realtime Subscriptions ========
-    function setupRealtime() {
-      supabase
-        .from('clients')
-        .on('INSERT', () => loadFromSupabase())
-        .on('UPDATE', () => loadFromSupabase())
-        .on('DELETE', () => loadFromSupabase())
-        .subscribe();
-      supabase
-        .from('tasks')
-        .on('INSERT', () => loadFromSupabase())
-        .on('UPDATE', () => loadFromSupabase())
-        .on('DELETE', () => loadFromSupabase())
-        .subscribe();
-    }
+
+  // realtime subscriptions will now work
+  function setupRealtime() {
+    supabase
+      .from('clients')
+      .on('INSERT', () => loadFromSupabase())
+      .on('UPDATE', () => loadFromSupabase())
+      .on('DELETE', () => loadFromSupabase())
+      .subscribe();
+
+    supabase
+      .from('tasks')
+      .on('INSERT', () => loadFromSupabase())
+      .on('UPDATE', () => loadFromSupabase())
+      .on('DELETE', () => loadFromSupabase())
+      .subscribe();
+  }
+
   document.addEventListener('DOMContentLoaded', initializeApp);
 </script>
   <div id="mainDashboard" class="container drop-zone">
