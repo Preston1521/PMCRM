@@ -13,6 +13,54 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+    
+    /* Sidebar Styles */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(15px);
+      border-right: 1px solid rgba(255,255,255,0.2);
+      padding: 20px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .sidebar-btn {
+      background: linear-gradient(135deg,#667eea,#764ba2);
+      color: #fff;
+      border: none;
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .sidebar-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+    }
+    
+    .sidebar-btn.analytics {
+      background: linear-gradient(135deg,#e74c3c,#c0392b);
+    }
+    
+    .main-wrapper {
+      margin-left: 250px;
+      min-height: 100vh;
+    }
+    
     .container {
       max-width: 1200px;
       margin: 20px auto;
@@ -474,6 +522,54 @@
     }
     .close:hover { color: #000; transform: scale(1.1); }
 
+    /* Enhanced Client Details Modal */
+    .client-details-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .client-details-section .detail-group {
+      padding: 15px;
+      background: rgba(248,249,250,0.8);
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    .client-details-section .detail-group h4 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .client-details-section .detail-item {
+      margin-bottom: 8px;
+    }
+    
+    .client-details-section .detail-item strong {
+      color: #555;
+      font-weight: 600;
+    }
+    
+    .editable-section {
+      background: rgba(255,255,255,0.95);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.4);
+      margin-top: 20px;
+    }
+    
+    .editable-section h4 {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     /* Forms */
     .form-group { margin-bottom: 20px; }
     .form-group label {
@@ -596,6 +692,35 @@
       border: 1px solid rgba(114,28,36,0.2);
     }
 
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-wrapper {
+        margin-left: 0;
+      }
+      .mobile-menu-btn {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1001;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+    }
+
     @media (max-width: 800px) {
       .metrics { grid-template-columns: 1fr 1fr; }
       .section-title { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -605,6 +730,7 @@
       .todo-container { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .priority-selector { grid-template-columns: 1fr; }
+      .client-details-section { grid-template-columns: 1fr; }
     }
     @media (max-width: 500px) {
       .clients-table th,
@@ -619,150 +745,169 @@
   </style>
 </head>
 <body>
-  <!-- PM Dashboard -->
-  <div id="mainDashboard" class="container drop-zone">
-    <div class="header">
-      <h1>PM Dashboard</h1>
-      <div class="metrics">
-        <div class="metric-card">
-          <div class="metric-value" id="totalRevenue">$0</div>
-          <div class="metric-label">Total Active Revenue</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" id="atRiskRevenue">$0</div>
-          <div class="metric-label">At Risk Revenue</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" id="lostRevenue">$0</div>
-          <div class="metric-label">Lost Revenue</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" id="clientCount">0</div>
-          <div class="metric-label">Active Clients</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" id="totalROAS">0x</div>
-          <div class="metric-label">Average ROAS</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" id="totalROI">0%</div>
-          <div class="metric-label">Average ROI</div>
-        </div>
-      </div>
-    </div>
+  <!-- Mobile Menu Button -->
+  <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
 
-    <div class="main-content">
-      <!-- To-Do List Section -->
-      <div class="todo-section">
-        <div class="section-title">
-          <h2>Team Tasks</h2>
-          <button class="add-task-btn" onclick="openTaskModal()">+ Add New Task</button>
-        </div>
-        <div class="todo-container">
-          <div class="todo-column" data-priority="urgent">
-            <h3 class="todo-header urgent">Urgent</h3>
-            <div class="todo-list" id="urgentTasks"></div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <button class="sidebar-btn analytics" onclick="openAdAnalytics()">
+      📊 Ad Analytics
+    </button>
+    <button class="sidebar-btn" onclick="openModal()">
+      👤 Add New Client
+    </button>
+    <button class="sidebar-btn" onclick="openTaskModal()">
+      ✅ Add New Task
+    </button>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper">
+    <!-- PM Dashboard -->
+    <div id="mainDashboard" class="container drop-zone">
+      <div class="header">
+        <h1>PM Dashboard</h1>
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-value" id="totalRevenue">$0</div>
+            <div class="metric-label">Total Active Revenue</div>
           </div>
-          <div class="todo-column" data-priority="moderate">
-            <h3 class="todo-header moderate">Moderate</h3>
-            <div class="todo-list" id="moderateTasks"></div>
+          <div class="metric-card">
+            <div class="metric-value" id="atRiskRevenue">$0</div>
+            <div class="metric-label">At Risk Revenue</div>
           </div>
-          <div class="todo-column" data-priority="done">
-            <h3 class="todo-header done">Completed</h3>
-            <div class="todo-list" id="doneTasks"></div>
+          <div class="metric-card">
+            <div class="metric-value" id="lostRevenue">$0</div>
+            <div class="metric-label">Lost Revenue</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" id="clientCount">0</div>
+            <div class="metric-label">Active Clients</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" id="totalROAS">0x</div>
+            <div class="metric-label">Average ROAS</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" id="totalROI">0%</div>
+            <div class="metric-label">Average ROI</div>
           </div>
         </div>
       </div>
 
-      <!-- Filters Section -->
-      <div class="filters-section">
-        <div class="filter-group">
-          <label>Status Filter</label>
-          <select id="statusFilter" onchange="applyFilters()">
-            <option value="">All Statuses</option>
-            <option value="active">Active</option>
-            <option value="at-risk">At Risk</option>
-            <option value="new">New</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Min Revenue</label>
-          <input type="number" id="minRevenue" placeholder="0" onchange="applyFilters()"/>
-        </div>
-        <div class="filter-group">
-          <label>Max Revenue</label>
-          <input type="number" id="maxRevenue" placeholder="No limit" onchange="applyFilters()"/>
-        </div>
-        <div class="filter-group">
-          <label>Min ROAS</label>
-          <input type="number" id="minROAS" placeholder="0" step="0.1" onchange="applyFilters()"/>
-        </div>
-        <div class="filter-group">
-          <label>Client Type</label>
-          <select id="typeFilter" onchange="applyFilters()">
-            <option value="">All Types</option>
-            <option value="consulting">Consulting</option>
-            <option value="advertising">Advertising</option>
-            <option value="development">Development</option>
-            <option value="design">Design</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="section-title">
-        <h2>Active Clients</h2>
-        <div class="toolbar">
-          <button class="add-client-btn" onclick="openModal()">+ Add New Client</button>
-          <div class="export-dropdown">
-            <button class="export-btn">📊 Export Reports</button>
-            <div class="export-dropdown-content">
-              <a href="#" onclick="exportToPDF()">Export as PDF</a>
-              <a href="#" onclick="exportToCSV()">Export as CSV</a>
-              <a href="#" onclick="exportToExcel()">Export as Excel</a>
+      <div class="main-content">
+        <!-- To-Do List Section -->
+        <div class="todo-section">
+          <div class="section-title">
+            <h2>Team Tasks</h2>
+            <button class="add-task-btn" onclick="openTaskModal()">+ Add New Task</button>
+          </div>
+          <div class="todo-container">
+            <div class="todo-column" data-priority="urgent">
+              <h3 class="todo-header urgent">Urgent</h3>
+              <div class="todo-list" id="urgentTasks"></div>
+            </div>
+            <div class="todo-column" data-priority="moderate">
+              <h3 class="todo-header moderate">Moderate</h3>
+              <div class="todo-list" id="moderateTasks"></div>
+            </div>
+            <div class="todo-column" data-priority="done">
+              <h3 class="todo-header done">Completed</h3>
+              <div class="todo-list" id="doneTasks"></div>
             </div>
           </div>
-          <button class="generate-link-btn" onclick="openLinkGenerator()">🔗 Generate Client Links</button>
         </div>
-      </div>
 
-      <!-- Client Link Generation Section -->
-      <div id="clientLinkSection" class="client-link-section" style="display:none;">
-        <h3>📋 Generated Client Links</h3>
-        <p>Share these secure links with your clients to let them view their analytics</p>
-        <div id="generatedLinks"></div>
-      </div>
+        <!-- Filters Section -->
+        <div class="filters-section">
+          <div class="filter-group">
+            <label>Status Filter</label>
+            <select id="statusFilter" onchange="applyFilters()">
+              <option value="">All Statuses</option>
+              <option value="active">Active</option>
+              <option value="at-risk">At Risk</option>
+              <option value="new">New</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Min Revenue</label>
+            <input type="number" id="minRevenue" placeholder="0" onchange="applyFilters()"/>
+          </div>
+          <div class="filter-group">
+            <label>Max Revenue</label>
+            <input type="number" id="maxRevenue" placeholder="No limit" onchange="applyFilters()"/>
+          </div>
+          <div class="filter-group">
+            <label>Min ROAS</label>
+            <input type="number" id="minROAS" placeholder="0" step="0.1" onchange="applyFilters()"/>
+          </div>
+          <div class="filter-group">
+            <label>Client Type</label>
+            <select id="typeFilter" onchange="applyFilters()">
+              <option value="">All Types</option>
+              <option value="consulting">Consulting</option>
+              <option value="advertising">Advertising</option>
+              <option value="development">Development</option>
+              <option value="design">Design</option>
+            </select>
+          </div>
+        </div>
 
-      <table class="clients-table">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Client Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Monthly Revenue</th>
-            <th>Ad Spend</th>
-            <th>ROAS</th>
-            <th>ROI</th>
-            <th>Status</th>
-            <th>Last Contact</th>
-            <th>Progress</th>
-            <th>Follow-up</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="clientsTableBody"></tbody>
-      </table>
+        <div class="section-title">
+          <h2>Active Clients</h2>
+          <div class="toolbar">
+            <button class="add-client-btn" onclick="openModal()">+ Add New Client</button>
+            <div class="export-dropdown">
+              <button class="export-btn">📊 Export Reports</button>
+              <div class="export-dropdown-content">
+                <a href="#" onclick="exportToPDF()">Export as PDF</a>
+                <a href="#" onclick="exportToCSV()">Export as CSV</a>
+                <a href="#" onclick="exportToExcel()">Export as Excel</a>
+              </div>
+            </div>
+            <button class="generate-link-btn" onclick="openLinkGenerator()">🔗 Generate Client Links</button>
+          </div>
+        </div>
 
-      <div class="lost-section drop-zone" id="lostSection">
-        <h3>Lost Clients (Auto-archived after 35 days)</h3>
-        <p>Drag clients here to mark them as lost • Drag lost clients back to restore them</p>
-        <div class="lost-clients" id="lostClients"></div>
-      </div>
+        <!-- Client Link Generation Section -->
+        <div id="clientLinkSection" class="client-link-section" style="display:none;">
+          <h3>📋 Generated Client Links</h3>
+          <p>Share these secure links with your clients to let them view their analytics</p>
+          <div id="generatedLinks"></div>
+        </div>
 
-      <div class="deleted-section" id="deletedSection">
-        <h3>Deleted Clients</h3>
-        <p>Permanently deleted clients appear here</p>
-        <div class="deleted-clients" id="deletedClients"></div>
+        <table class="clients-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Client Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Monthly Revenue</th>
+              <th>Ad Spend</th>
+              <th>ROAS</th>
+              <th>ROI</th>
+              <th>Status</th>
+              <th>Last Contact</th>
+              <th>Progress</th>
+              <th>Follow-up</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clientsTableBody"></tbody>
+        </table>
+
+        <div class="lost-section drop-zone" id="lostSection">
+          <h3>Lost Clients (Auto-archived after 35 days)</h3>
+          <p>Drag clients here to mark them as lost • Drag lost clients back to restore them</p>
+          <div class="lost-clients" id="lostClients"></div>
+        </div>
+
+        <div class="deleted-section" id="deletedSection">
+          <h3>Deleted Clients</h3>
+          <p>Permanently deleted clients appear here</p>
+          <div class="deleted-clients" id="deletedClients"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -913,25 +1058,74 @@
     </div>
   </div>
 
-  <!-- Client Details Modal -->
+  <!-- Enhanced Client Details Modal -->
   <div id="clientDashboardModal" class="modal" onclick="if(event.target===this)closeClientModal()">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 800px;">
       <div class="modal-header">
-        <h3>Client Details</h3>
+        <h3>📊 Client Dashboard</h3>
         <span class="close" onclick="closeClientModal()">&times;</span>
       </div>
-      <div id="clientDetails">
-        <p><strong>Name:</strong> <span id="dashClientName"></span></p>
-        <p><strong>Email:</strong> <span id="dashEmail"></span></p>
-        <p><strong>Phone:</strong> <span id="dashPhone"></span></p>
-        <p><strong>Monthly Revenue:</strong> <span id="dashRevenue"></span></p>
-        <p><strong>Ad Spend:</strong> <span id="dashAdSpend"></span></p>
-        <p><strong>ROAS:</strong> <span id="dashROAS"></span></p>
-        <p><strong>ROI:</strong> <span id="dashROI"></span></p>
-        <p><strong>Status:</strong> <span id="dashStatus"></span></p>
-        <p><strong>Last Contact:</strong> <span id="dashLastContact"></span></p>
-        <p><strong>Progress:</strong> <span id="dashProgress"></span></p>
-        <p><strong>Follow-up:</strong> <span id="dashFollowUp"></span></p>
+      
+      <!-- Client Information Display -->
+      <div class="client-details-section">
+        <div class="detail-group">
+          <h4>👤 Contact Information</h4>
+          <div class="detail-item"><strong>Name:</strong> <span id="dashClientName"></span></div>
+          <div class="detail-item"><strong>Email:</strong> <span id="dashEmail"></span></div>
+          <div class="detail-item"><strong>Phone:</strong> <span id="dashPhone"></span></div>
+          <div class="detail-item"><strong>Status:</strong> <span id="dashStatus"></span></div>
+        </div>
+        
+        <div class="detail-group">
+          <h4>💰 Financial Metrics</h4>
+          <div class="detail-item"><strong>Monthly Revenue:</strong> <span id="dashRevenue"></span></div>
+          <div class="detail-item"><strong>Ad Spend:</strong> <span id="dashAdSpend"></span></div>
+          <div class="detail-item"><strong>ROAS:</strong> <span id="dashROAS"></span></div>
+          <div class="detail-item"><strong>ROI:</strong> <span id="dashROI"></span></div>
+        </div>
+        
+        <div class="detail-group">
+          <h4>📈 Progress & Activity</h4>
+          <div class="detail-item"><strong>Progress:</strong> <span id="dashProgress"></span></div>
+          <div class="detail-item"><strong>Last Contact:</strong> <span id="dashLastContact"></span></div>
+          <div class="detail-item"><strong>Needs Follow-up:</strong> <span id="dashFollowUp"></span></div>
+        </div>
+        
+        <div class="detail-group">
+          <h4>🕒 Recent Activity</h4>
+          <div class="detail-item"><strong>Last Updated:</strong> <span id="dashLastUpdated"></span></div>
+          <div class="detail-item"><strong>Days Since Contact:</strong> <span id="dashDaysSince"></span></div>
+        </div>
+      </div>
+
+      <!-- Editable Section -->
+      <div class="editable-section">
+        <h4>✏️ Quick Update</h4>
+        <form id="clientQuickUpdateForm">
+          <input type="hidden" id="quickUpdateClientId" />
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lastFollowedUp">📅 Last Followed Up</label>
+              <input type="date" id="lastFollowedUp" name="last_followed_up" />
+            </div>
+            <div class="form-group">
+              <label for="followUpNeeded">Follow-up Required?</label>
+              <select id="followUpNeeded" name="follow_up_needed">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="customerNotes">📝 Customer Notes</label>
+            <textarea id="customerNotes" name="customer_notes" rows="6" 
+                      placeholder="Add notes about client interactions, project updates, concerns, or important details..."></textarea>
+          </div>
+          
+          <button type="submit" class="submit-btn">💾 Save Updates</button>
+        </form>
       </div>
     </div>
   </div>
@@ -1057,6 +1251,16 @@
       return `${base}?client=${token}&id=${id}`;
     }
 
+    // Sidebar functions
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    function openAdAnalytics() {
+      window.open('/ad-analytics.html', '_blank');
+    }
+
     // Load data from Supabase
     async function loadFromSupabase() {
       if (!supabase) {
@@ -1088,7 +1292,9 @@
           clientLink: generateClientLink(c.id),
           progress: c.progress || 0,
           followUp: c.follow_up || false,
-          ad_spend: c.monthly_ad_spend || 0
+          ad_spend: c.monthly_ad_spend || 0,
+          customer_notes: c.customer_notes || '',
+          last_followed_up: c.last_followed_up || null
         }));
 
         // Load lost clients
@@ -1160,7 +1366,7 @@
       }
     }
 
-    // Show table creation instructions
+    // Show table creation instructions with new fields
     function showTableCreationInstructions() {
       const modal = document.createElement('div');
       modal.className = 'modal active';
@@ -1186,6 +1392,8 @@ CREATE TABLE IF NOT EXISTS clients (
   monthly_ad_spend DECIMAL(10,2) DEFAULT 0,
   status VARCHAR(50) DEFAULT 'new',
   last_contact DATE,
+  last_followed_up DATE,
+  customer_notes TEXT,
   progress INTEGER DEFAULT 0,
   follow_up BOOLEAN DEFAULT false,
   deleted BOOLEAN DEFAULT false,
@@ -1226,9 +1434,9 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
     function initializeSampleData(){
       if (!clients.length) {
         clients = [
-          {id:1,type:'consulting',name:'Acme Corp',email:'contact@acme.com',phone:'(555)123-4567',monthly_revenue:5000,ad_spend:2000,status:'active',last_contact:'2024-12-15',progress:85,followUp:true,clientLink:''},
-          {id:2,type:'advertising',name:'TechStart Inc',email:'hello@techstart.com',phone:'(555)987-6543',monthly_revenue:8500,ad_spend:3500,status:'at-risk',last_contact:'2024-11-28',progress:45,followUp:false,clientLink:''},
-          {id:3,type:'development',name:'Global Solutions',email:'info@global.com',phone:'(555)456-7890',monthly_revenue:12000,ad_spend:4000,status:'active',last_contact:'2024-12-20',progress:92,followUp:false,clientLink:''}
+          {id:1,type:'consulting',name:'Acme Corp',email:'contact@acme.com',phone:'(555)123-4567',monthly_revenue:5000,ad_spend:2000,status:'active',last_contact:'2024-12-15',progress:85,followUp:true,clientLink:'',customer_notes:'Great client, very responsive to our recommendations.',last_followed_up:'2024-12-10'},
+          {id:2,type:'advertising',name:'TechStart Inc',email:'hello@techstart.com',phone:'(555)987-6543',monthly_revenue:8500,ad_spend:3500,status:'at-risk',last_contact:'2024-11-28',progress:45,followUp:false,clientLink:'',customer_notes:'Needs more attention, seem unhappy with recent results.',last_followed_up:'2024-11-20'},
+          {id:3,type:'development',name:'Global Solutions',email:'info@global.com',phone:'(555)456-7890',monthly_revenue:12000,ad_spend:4000,status:'active',last_contact:'2024-12-20',progress:92,followUp:false,clientLink:'',customer_notes:'Excellent partner, always pays on time.',last_followed_up:'2024-12-18'}
         ];
         clients.forEach(c=>c.clientLink=generateClientLink(c.id));
       }
@@ -1687,7 +1895,9 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
     last_contact:   formData.get('last_contact'),
     progress:       0,
     follow_up:      false,
-    deleted:        false
+    deleted:        false,
+    customer_notes: '',
+    last_followed_up: null
   };
 
   try {
@@ -1699,7 +1909,6 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
       if (error) throw error;
       
       if (data && data[0]) {
-        // — update UI
         newClient.id        = data[0].id;
         newClient.clientLink= generateClientLink(data[0].id);
         newClient.ad_spend  = newClient.monthly_ad_spend;
@@ -1708,7 +1917,7 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
         showMessage('✅ Client added successfully!', 'success');
         closeModal();
 
-        // — fire Zapier webhook (no-cors)
+        // Fire Zapier webhook (no-cors)
         try {
           fetch('https://hooks.zapier.com/hooks/catch/21853196/2n5jrmp/', {
             method: 'POST',
@@ -1830,6 +2039,45 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
       }
     }
 
+    // Handle client quick update form
+    async function handleClientQuickUpdate(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const clientId = parseInt(formData.get('client_id'));
+      
+      const updateData = {
+        last_followed_up: formData.get('last_followed_up') || null,
+        follow_up: formData.get('follow_up_needed') === 'true',
+        customer_notes: formData.get('customer_notes') || '',
+        updated_at: new Date().toISOString()
+      };
+
+      try {
+        if (supabase) {
+          const { error } = await supabase
+            .from('Clients')
+            .update(updateData)
+            .eq('id', clientId);
+            
+          if (error) throw error;
+        }
+        
+        // Update local data
+        const clientIndex = clients.findIndex(c => c.id === clientId);
+        if (clientIndex !== -1) {
+          clients[clientIndex] = { ...clients[clientIndex], ...updateData };
+          applyFilters();
+          showMessage('✅ Client notes updated successfully!', 'success');
+          
+          // Refresh the modal content
+          setTimeout(() => openClientModal(clientId), 500);
+        }
+      } catch (error) {
+        console.error('Error updating client:', error);
+        showMessage('❌ Failed to update client notes', 'error');
+      }
+    }
+
     // Priority Selection
     function selectPriority(priority) {
       document.querySelectorAll('.priority-option').forEach(opt => {
@@ -1929,6 +2177,8 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
     function openClientModal(clientId){
       const c = clients.find(x=>x.id===clientId);
       if (!c) return;
+      
+      // Populate client details
       document.getElementById('dashClientName').textContent   = c.name;
       document.getElementById('dashEmail').textContent        = c.email;
       document.getElementById('dashPhone').textContent        = c.phone;
@@ -1940,6 +2190,15 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
       document.getElementById('dashLastContact').textContent  = fmtDate(c.last_contact);
       document.getElementById('dashProgress').textContent     = c.progress+'%';
       document.getElementById('dashFollowUp').textContent     = c.followUp?'Yes':'No';
+      document.getElementById('dashLastUpdated').textContent  = c.updated_at ? fmtDate(c.updated_at) : 'N/A';
+      document.getElementById('dashDaysSince').textContent    = daysSince(c.last_contact) + ' days';
+      
+      // Populate editable fields
+      document.getElementById('quickUpdateClientId').value = clientId;
+      document.getElementById('lastFollowedUp').value = c.last_followed_up || '';
+      document.getElementById('followUpNeeded').value = c.followUp ? 'true' : 'false';
+      document.getElementById('customerNotes').value = c.customer_notes || '';
+      
       document.getElementById('clientDashboardModal').classList.add('active');
     }
 
@@ -2053,6 +2312,13 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
         taskForm.addEventListener('submit', handleTaskSubmission);
       }
 
+      // Client quick update form submission
+      const quickUpdateForm = document.getElementById('clientQuickUpdateForm');
+      if (quickUpdateForm) {
+        quickUpdateForm.removeEventListener('submit', handleClientQuickUpdate);
+        quickUpdateForm.addEventListener('submit', handleClientQuickUpdate);
+      }
+
       // Escape key to close modals
       document.addEventListener('keydown', e=>{
         if (e.key==='Escape') {
@@ -2134,6 +2400,17 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
           initializeSampleData();
         }
       }, 2000);
+    });
+
+    // Fix the hidden field name in the quick update form
+    document.addEventListener('DOMContentLoaded', function() {
+      const quickUpdateForm = document.getElementById('clientQuickUpdateForm');
+      if (quickUpdateForm) {
+        const hiddenField = quickUpdateForm.querySelector('input[type="hidden"]');
+        if (hiddenField) {
+          hiddenField.name = 'client_id';
+        }
+      }
     });
   </script>
 </body>
