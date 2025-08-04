@@ -1272,7 +1272,7 @@
       try {
         // Load active clients
         const { data: clientsData, error: clientsError } = await supabase
-          .from('Clients')
+          .from('clients')
           .select('*')
           .neq('status', 'lost')
           .neq('deleted', true)
@@ -1299,7 +1299,7 @@
 
         // Load lost clients
         const { data: lostData, error: lostError } = await supabase
-          .from('Clients')
+          .from('clients')
           .select('*')
           .eq('status', 'lost')
           .eq('deleted', false)
@@ -1317,7 +1317,7 @@
 
         // Load deleted clients
         const { data: deletedData, error: deletedError } = await supabase
-          .from('Clients')
+          .from('clients')
           .select('*')
           .eq('deleted', true)
           .order('updated_at', { ascending: false });
@@ -1334,7 +1334,7 @@
 
         // Load tasks
         const { data: tasksData, error: tasksError } = await supabase
-          .from('Tasks')
+          .from('tasks')
           .select('*')
           .order('created_at', { ascending: false });
         
@@ -1688,7 +1688,7 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
         if (supabase) {
           try {
             const { error } = await supabase
-              .from('Tasks')
+              .from('tasks')
               .update({ priority: newP, updated_at: t.updated_at })
               .eq('id', tid);
               
@@ -1716,7 +1716,7 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
       try {
         if (supabase) {
           const { error } = await supabase
-            .from('Tasks')
+            .from('tasks')
             .delete()
             .eq('id', taskId);
             
@@ -1786,7 +1786,7 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
       try {
         if (supabase) {
           const { error } = await supabase
-            .from('Clients')
+            .from('clients')
             .update({ 
               status: 'lost', 
               updated_at: new Date().toISOString() 
@@ -1819,7 +1819,7 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
       try {
         if (supabase) {
           const { error } = await supabase
-            .from('Clients')
+            .from('clients')
             .update({ 
               status: newStatus, 
               updated_at: new Date().toISOString() 
@@ -1852,7 +1852,7 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
       try {
         if (supabase) {
           const { error } = await supabase
-            .from('Clients')
+            .from('clients')
             .update({ 
               deleted: true, 
               updated_at: new Date().toISOString() 
@@ -2337,23 +2337,16 @@ CREATE POLICY "Allow all operations on tasks" ON tasks
       try {
         supabase
           .channel('clients_changes')
-          .on('postgres_changes', 
-            { event: '*', schema: 'public', table: 'Clients' }, 
-            (payload) => {
-              console.log('Client change received:', payload);
-              loadFromSupabase();
-            }
+          .on('postgres_changes',
+            { event: '*', schema: 'public', table: 'clients' },
+            () => loadFromSupabase()
           )
           .subscribe();
-
         supabase
           .channel('tasks_changes')
-          .on('postgres_changes', 
-            { event: '*', schema: 'public', table: 'Tasks' }, 
-            (payload) => {
-              console.log('Task change received:', payload);
-              loadFromSupabase();
-            }
+          .on('postgres_changes',
+            { event: '*', schema: 'public', table: 'tasks' },
+            () => loadFromSupabase()
           )
           .subscribe();
 
